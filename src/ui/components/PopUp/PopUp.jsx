@@ -5,11 +5,12 @@ import Avatar from '../Avatar/Avatar';
 class PopUp extends Component {
     render () {
         //ПРОБРОСИТЬ ДАННЫЕ О ПОЛЬЗОВАТЕЛЕ С MainWall
+        //РАЗОБРАТЬСЯ С КОЛЕСОМ ПРОКРУТКИ КОММЕНТАРИЕВ
         return (
             <div className={style.popUp}>
                 <img className={style.photo} src={this.props.url}/>
                 <div className={style.photoInformation}>
-                    <header>
+                    <header className={style.header}>
                         <div className={style.user}>
                             <Avatar size={'50px'}/>
                             <span className={style.name}>JRRT</span>
@@ -18,24 +19,38 @@ class PopUp extends Component {
                         </div>
                         <div className={style.points}></div>
                     </header>
-                    <ul>
+                    <div className={style.commentsField}>
                         <hr/>
-                        <li>wrfwe</li>
+                        <ul>
+                            <li>nice photo!</li>
+                            <li>nice photo!</li>
+                            <li>nice photo!</li>
+                            <li>nice photo!</li>
+                            <li>bad photo!</li>
+                            <li>bad photo!</li>
+                            <li>bad photo!</li>
+                            <li>bad photo!</li>
+                            <li>bad photo!</li>
+                        </ul>
                         <hr/>
-                    </ul>
-                    <div>
+                    </div>
+                    <div className={style.navigation}>
                         <div className={style.buttons}>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                            <div className={style.leftButtons}>
+                                <div id={style.heartButton}></div>
+                                <div id={style.commentButton}></div>
+                                <div id={style.upLoadButton}></div>
+                            </div>
+                            <div id={style.saveButton}></div>
                         </div>
                         <p>10 likes</p>
-                    </div>
-                    <div>
                         <hr/>
-                        <input id={style.comment} type="text" placeholder='Add a comment...'/>
-                        <button>Post</button>
+                    </div>
+                    <div className={style.comment}>
+                        <div>
+                            <input id={style.comment} type="text" placeholder='Add a comment...'/>
+                            <button>Post</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,6 @@
 @value bodyColor from '../../../css/colors.css';
+@value blueButton from '../../../css/colors.css';
+@value hrColor from '../../../css/colors.css';
 
 .popUp{
     width: 100vw;
@@ -9,27 +11,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.popUp hr{
+    border: 1px solid hrColor;
+    width: 100%;
 }
 .photo{
     width: 25vw;
     height: 50vh;
 }
 
-header{
+.photoInformation {
+    width: 22vw;
+    height: 50vh;
+    background-color: bodyColor;
+    display: grid;
+    grid-template-rows: 8vh 26vh 10vh 5vh;
+}
+.header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
 }
-.photoInformation {
-    width: 22vw;
-    height: 50vh;
-    background-color: white;
-    display: grid;
-    grid-template-rows: 8vh 19vh 11vh 7vh;
-}
+
 .user{
     display: flex;
     justify-content: space-between;
@@ -60,19 +67,71 @@ header{
     width: 17.5px;
     height: 5px;
 }
-hr{
-    border: 1px solid bodyColor;
+
+
+.commentsField{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.commentsField>ul{
+    height: calc(100% - 2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: auto
+}
+
+.navigation{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 .buttons{
     display: flex;
+    justify-content: space-between;
 }
-.buttons>div{
-    width: 20px;
+.buttons div{
+    width: 50px;
     height: 20px;
     border: 0;
-    background-image: url(./images/heartBlack.png);
     background-size: 20px 20px;
+    background-repeat: no-repeat;
+}
+.leftButtons{
+    display: flex;
+    justify-content: space-between;
+}
+#heartButton{
+    background-image: url(./images/heartBlack.png);
+}
+#commentButton{
+    background-image: url(./images/comment.png);
+}
+#upLoadButton{
+    background-image: url(./images/upLoad.png);
+    background-size: 15px 15px;
+}
+#saveButton{
+    background-image: url(./images/save.png);
+}
 
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.comment>div{
+    display: flex;
+    justify-content: space-between;
+}
+.comment>div>button{
+    width: 10%;
+    margin-right: 5px;
+    border: 0;
+    background-color: white;
+    color: blueButton;
 }
 #comment{
     width: 90%;
@@ -80,4 +139,3 @@ hr{
     outline: none;
     border: 0;
 }
-

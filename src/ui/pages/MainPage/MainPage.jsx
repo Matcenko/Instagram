@@ -5,7 +5,6 @@ import PopUp from  '../../components/PopUp/PopUp'
 
 class MainPage extends Component {
 
-
     render () {
         return (
             <div>

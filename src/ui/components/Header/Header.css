@@ -1,10 +1,6 @@
 @value blueButton from '../../../css/colors.css';
 @value bodyColor from '../../../css/colors.css';
 
-*{
-    font-family: 'Roboto', sans-serif;
-}
-
 .header {
     height: 80px;
     width: 100%;

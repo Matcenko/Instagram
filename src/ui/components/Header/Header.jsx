@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import style from './Header.css';
 
 class Header extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state =
             {
@@ -13,7 +13,7 @@ class Header extends Component {
 
     render () {
         return (
-            <header className={style.header}>
+            <header ref='list' className={style.header}>
                 <button className={style.logo}></button>
                 <input
                     className={classNames(style.search, this.state.searchClick)}

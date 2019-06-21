@@ -1,6 +1,9 @@
 @value bodyColor from '../../../css/colors.css';
 @value linkColor from '../../../css/colors.css';
-
+@value hrColor from '../../../css/colors.css';
+*{
+    font-family: 'Roboto', sans-serif;
+}
 main{
     min-height: 100vh;
     max-height: 100%;
@@ -13,7 +16,7 @@ main{
     height: 1.25px;
     margin-top: 20px;
     border: 0px none;
-    background-color: rgb(237, 236, 237);
+    background-color: hrColor;
 }
 .buttons{
     display: flex;
