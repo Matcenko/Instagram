@@ -4,7 +4,7 @@ import Avatar from '../Avatar/Avatar';
 
 class PopUp extends Component {
     render () {
-        //ПРОБРОСИТЬ ДАННЫЕ О ПОЛЬЗОВАТЕЛЕ С MainWall
+
         //РАЗОБРАТЬСЯ С КОЛЕСОМ ПРОКРУТКИ КОММЕНТАРИЕВ
         return (
             <div className={style.popUp}>
@@ -13,7 +13,7 @@ class PopUp extends Component {
                     <header className={style.header}>
                         <div className={style.user}>
                             <Avatar size={'50px'}/>
-                            <span className={style.name}>JRRT</span>
+                            <span className={style.name}>{this.props.userInformation.nick}</span>
                             <span> &bull;</span>
                             <button className={style.follow}>Follow</button>
                         </div>

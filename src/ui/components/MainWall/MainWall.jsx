@@ -1,59 +1,61 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './MainWall.css';
 import User from '../User/User';
 import Posts from '../Posts/Posts';
 import PopUp from '../PopUp/PopUp';
 
 class MainWall extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
+            postsClick: true,
             posts: [
                 {
-                    url: './src/ui/components/MainWall/images/Tolkien1.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/Tolkien1.jpg',
                     likes: 14,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tolkien2.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/Tolkien2.jpg',
                     likes: 19,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tolkien3.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/Tolkien3.jpg',
                     likes: 0,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tolkien4.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/Tolkien4.jpg',
                     likes: 0,
                     comments: 1
                 }
             ],
+            taggedClick: false,
             tagged: [
                 {
-                    url: 'https://i0.wp.com/rusmonitor.com/wp-content/uploads/2019/02/5515.jpg',
-                    likes: 14,
+                    url: './src/ui/components/MainWall/images/Tagged/BrotherHood.jpg',
+                    likes: 20,
+                    comments: 4
+                },
+                {
+                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien.jpg',
+                    likes: 4,
+                    comments: 9
+                },
+                {
+                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien2.jpg',
+                    likes: 4,
                     comments: 1
                 },
                 {
-                    url: 'https://vignette.wikia.nocookie.net/lotr/images/b/bd/Christopher-Tolkien-220x300.jpg/revision/latest?cb=20160620084929&path-prefix=ru',
-                    likes: 14,
-                    comments: 1
+                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien3.jpg',
+                    likes: 0,
+                    comments: 9
                 },
                 {
-                    url: 'https://tolkien.su/media/iblock/e26/christopher_tolkien_1_.jpg',
-                    likes: 14,
-                    comments: 1
-                },
-                {
-                    url: 'https://i2.wp.com/www.henneth-annun.ru/wp-content/uploads/2013/04/ChristopherTolkien.jpg',
-                    likes: 14,
-                    comments: 1
-                },
-                {
-                    url: 'https://beztabu.net/uploads/770x433_DIR/media_news/2019/02/5c63cc7b82ca3905155313.jpg',
-                    likes: 14,
+                    url: './src/ui/components/MainWall/images/Tagged/TolkienFilm.jpg',
+                    likes: 6,
                     comments: 1
                 }
             ],
@@ -68,12 +70,12 @@ class MainWall extends Component {
         };
     }
 
-    handleOnClick (index) { //передача данных попапу
-        this.setState({ popUpRender: true } ); // рендерим попАп
-        this.setState({ popUpPhotoUrl: this.state.posts[index].url });  //пробрасываем ссылку на фото в попап
+    handleOnClick(index, postsOrTagged) { //передача данных попапу
+        this.setState({popUpRender: true}); // рендерим попАп
+        this.setState({popUpPhotoUrl: postsOrTagged[index].url});  //пробрасываем ссылку на фото в попап
     }
 
-    renderPopUp () {
+    renderPopUp() {
         return <PopUp
             url={this.state.popUpPhotoUrl}
             userInformation={this.state.userInformation}
@@ -81,23 +83,41 @@ class MainWall extends Component {
     }
 
     render () {
+        const postsOrTagged = this.state.postsClick ? this.state.posts : this.state.tagged;
         return (
-
             <main className={style.main}>
 
-                { this.state.popUpRender ? this.renderPopUp() : null}
+                {this.state.popUpRender ? this.renderPopUp() : null}
 
                 <User userInformation={this.state.userInformation}/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
-                    <button className={style.PostsButton}> Posts</button>
-                    <button className={style.TaggedButton}> Tagged</button>
+                    <button
+                        className={style.PostsButton}
+                        onClick={() => {
+                            this.setState({
+                                postsClick: true,
+                                taggedClick: false
+                            })
+                        }}
+                    >Posts
+                    </button>
+                    <button
+                        className={style.TaggedButton}
+                        onClick={() => {
+                            this.setState({
+                                postsClick: false,
+                                taggedClick: true
+                            })
+                        }}
+                    >Tagged
+                    </button>
                 </div>
 
                 <Posts
-                    posts={this.state.posts}
+                    posts={postsOrTagged}
                     onClick={(index) => {
-                        this.handleOnClick(index);
+                        this.handleOnClick(index, postsOrTagged);
                     }}
                 />
 

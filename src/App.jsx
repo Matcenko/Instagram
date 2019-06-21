@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import media from './ui/hocs/media/media.jsx';
 
 import '../client/vendor';
@@ -15,6 +14,7 @@ class App extends Component {
         return <main>
             <Switch>
                 <Route exact path='/' component={MainPage} />
+
             </Switch>
         </main>;
     }
