@@ -1,0 +1,68 @@
+@value bodyColor from '../../../css/colors.css';
+@value linkColor from '../../../css/colors.css';
+
+main{
+    min-height: 100vh;
+    max-height: 100%;
+    padding-top: 71px;
+    padding-left: 8%;
+    padding-right: 8%;
+    background-color: bodyColor;
+}
+.hr{
+    height: 1.25px;
+    margin-top: 20px;
+    border: 0px none;
+    background-color: rgb(237, 236, 237);
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+.buttons>button{
+    margin-right: 10px;
+    border: 0;
+    font-size: 105%;
+    cursor: pointer;
+    background-color: bodyColor;
+}
+.PostsButton::before{
+    content: '';
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    display: inline-block;
+    background-image: url(./images/posts.png);
+    background-size: 13.5px 13.5px;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+.TaggedButton::before{
+    content: '';
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    display: inline-block;
+    background-image: url(./images/tagged.png);
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+footer{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+}
+footer>a{
+    margin-right: 5px;
+    font-size: 90%;
+}
+a{
+    text-decoration: none;
+    color: linkColor;
+}
+

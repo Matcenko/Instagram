@@ -1,0 +1,6 @@
+#avatar{
+    border-radius: 100%;
+    background-color: grey;
+    background-image: url(./images/TolkienAva.jpg);
+    background-repeat: no-repeat;
+}

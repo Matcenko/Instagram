@@ -1,0 +1,83 @@
+@value bodyColor from '../../../css/colors.css';
+
+.popUp{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.photo{
+    width: 25vw;
+    height: 50vh;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.photoInformation {
+    width: 22vw;
+    height: 50vh;
+    background-color: white;
+    display: grid;
+    grid-template-rows: 8vh 19vh 11vh 7vh;
+}
+.user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.name{
+    margin-left: 10px;
+}
+.name::after{
+    content: '';
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(../User/images/verification.png);
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+.follow{
+    margin-left: 5px;
+    padding: 0;
+    border: 0;
+    background-color: white;
+}
+.points{
+    background-image: url(./images/points.png);
+    background-size: 17.5px 5px;
+    width: 17.5px;
+    height: 5px;
+}
+hr{
+    border: 1px solid bodyColor;
+}
+.buttons{
+    display: flex;
+}
+.buttons>div{
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background-image: url(./images/heartBlack.png);
+    background-size: 20px 20px;
+
+}
+#comment{
+    width: 90%;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+

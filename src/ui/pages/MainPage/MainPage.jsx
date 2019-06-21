@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-
-import Description from '../../components/Description/Description.jsx';
-import Points from '../../components/Points/Points.jsx';
+import MainWall from '../../components/MainWall/MainWall';
+import Header from '../../components/Header/Header';
+import PopUp from  '../../components/PopUp/PopUp'
 
 class MainPage extends Component {
+
+
     render () {
-        return <section>
-            <Description />
-            <Points />
-        </section>;
+        return (
+            <div>
+                <Header/>
+                <MainWall/>
+            </div>
+        );
     }
 }
 

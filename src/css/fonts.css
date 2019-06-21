@@ -15,3 +15,8 @@
 
   src: url('./font/HelveticaNeueCyr-Bold.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Roboto', sans-serif;;
+  src: url("./font/Roboto-Regular.ttf");
+}
