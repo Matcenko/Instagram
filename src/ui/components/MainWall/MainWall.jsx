@@ -59,8 +59,12 @@ class MainWall extends Component {
                     comments: 1
                 }
             ],
-            popUpRender: false,
-            popUpPhotoUrl: null,
+            popUpState: {
+                render: false,
+                photoUrl: null,
+                likes: null,
+                comments: null
+            },
             userInformation: {
                 nick: 'JRRT',
                 fullName: 'John Ronald Reuel Tolkien',
@@ -71,24 +75,30 @@ class MainWall extends Component {
     }
 
     handleOnClick(index, postsOrTagged) { //передача данных попапу
-        this.setState({popUpRender: true}); // рендерим попАп
-        this.setState({popUpPhotoUrl: postsOrTagged[index].url});  //пробрасываем ссылку на фото в попап
+        this.setState({
+            popUpState: {
+                ...this.state.popUpState,
+                render: true,
+                photoUrl: postsOrTagged[index].url,
+                likes: postsOrTagged[index].likes,
+                comments: postsOrTagged[index].comments
+            }
+        })
     }
 
     renderPopUp() {
         return <PopUp
-            url={this.state.popUpPhotoUrl}
+            popUpInfo={this.state.popUpState}
             userInformation={this.state.userInformation}
         />;
     }
 
-    render () {
+    render() {
         const postsOrTagged = this.state.postsClick ? this.state.posts : this.state.tagged;
+
         return (
             <main className={style.main}>
-
-                {this.state.popUpRender ? this.renderPopUp() : null}
-
+                {this.state.popUpState.render ? this.renderPopUp() : null}
                 <User userInformation={this.state.userInformation}/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
@@ -120,7 +130,6 @@ class MainWall extends Component {
                         this.handleOnClick(index, postsOrTagged);
                     }}
                 />
-
                 <footer>
                     <a href="#">ABOUT US</a>
                     <a href="#">SUPPORT</a>
