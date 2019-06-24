@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './Avatar.css';
-
+import PropTypes from 'prop-types';
 
 class Avatar extends Component {
-    renderAvatar (size) {
+    renderAvatar(size) {
         return (<img
-            id={style.avatar}
+            className={style.avatar}
             style={{
-                minWidth: size,
-                maxWidth: size,
-                minHeight: size,
-                maxHeight: size,
-                backgroundSize: size + ' ' + size}}
+                width: size,
+                height: size,
+                backgroundSize: size + ' ' + size
+            }}
         />);
     }
 
-    render () {
-        const size = this.props.size ? this.props.size : '150px';
+    render() {
         return (
             <div>
-                {this.renderAvatar(size)}
+                {this.renderAvatar(this.props.size)}
             </div>
         );
     }
 }
+
+Avatar.defaultProps = {
+    size: '150px'
+};
+
+Avatar.propTypes = {
+    size: PropTypes.string
+};
+
 export default Avatar;

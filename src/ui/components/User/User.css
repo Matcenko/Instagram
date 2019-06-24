@@ -1,62 +1,71 @@
 @value blueButton from '../../../css/colors.css';
+@value linkColor from '../../../css/colors.css';
+@value myWhite from '../../../css/colors.css';
+@value myBlack from '../../../css/colors.css';
+@value hrColor from '../../../css/colors.css';
 
 .user{
-    margin-left: 30px;
-    margin-right: 30px;
+    margin: 80px 30px;
     display: flex;
 }
+
 .userInformation{
     margin-left: 55px;
     display: flex;
     flex-direction: column;
+    font-family: 'Roboto', sans-serif;
 }
-.userInformation>div{
+
+.nameAndFollow{
     margin-bottom: 25px;
 }
+
 .nickName{
-    font-size: 120%;
+    font-size: 20px;
     font-weight: bold;
 }
-.nickName:after{
-    content: '';
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    display: inline-block;
+
+.nickName:after {
+    @mixin addIconBefore;
     background-image: url(./images/verification.png);
-    background-size: 15px 15px;
-    background-repeat: no-repeat;
-    text-align: center;
 }
+
 .followButton{
     margin-left: 11px;
-    padding: 6px;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
     border-radius: 4px;
-    background-color: white;
-    color: black;
-    border: 1px solid silver;
+    background-color: myWhite;
+    color: myBlack ;
+    border: 1px solid hrColor;
 }
+
 .followingButton{
     border: 1px solid blueButton;
     background-color: blueButton;
-    color: white;
+    color: myWhite;
 }
+
 .followers{
-    display: grid;
-    grid-template-columns: repeat(3, 120px);
+    display: flex;
 }
-.followers>span{
-    margin-right: 25px;
+
+.followersInfo{
+    margin: 0 10px 25px 0;
 }
+
 .bold{
     font-weight: bold;
 }
+
 .nameWorkWeb{
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+}
+
+.nameWorkWeb>.bold{
+    text-decoration: none;
+    color: linkColor;
 }

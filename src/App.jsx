@@ -13,8 +13,7 @@ class App extends Component {
     render () {
         return <main>
             <Switch>
-                <Route exact path='/' component={MainPage} />
-
+                <Route exact path='/' component={MainPage}/>
             </Switch>
         </main>;
     }

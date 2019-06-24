@@ -16,4 +16,16 @@
          outline: none;
          box-shadow: none;
      }
+};
+
+@define-mixin addIconBefore {
+    content: '';
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    display: inline-block;
+    background-size: 13.5px 13.5px;
+    background-repeat: no-repeat;
+    text-align: center;
 }

@@ -2,27 +2,22 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 import style from './Header.css';
 
+
 class Header extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
-        this.state =
-            {
-                searchClick: null
-            };
+        this.state = {
+            searchClick: null
+        };
     }
 
-    render () {
+    render() {
         return (
-            <header ref='list' className={style.header}>
+            <header className={style.header}>
                 <button className={style.logo}></button>
                 <input
                     className={classNames(style.search, this.state.searchClick)}
                     placeholder='Search'
-                    onClick={() => {
-                        this.setState({
-                            searchClick: style.searchClick
-                        });
-                    }}
                 />
                 <div>
                     <button className={style.logInButton}>Log In</button>
@@ -32,5 +27,7 @@ class Header extends Component {
         );
     }
 }
+
+
 
 export default Header;

@@ -11,22 +11,22 @@ class MainWall extends Component {
             postsClick: true,
             posts: [
                 {
-                    url: './src/ui/components/MainWall/images/Posts/Tolkien1.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/tolkien1.jpg',
                     likes: 14,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Posts/Tolkien2.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/tolkien2.jpg',
                     likes: 19,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Posts/Tolkien3.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/tolkien3.jpg',
                     likes: 0,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Posts/Tolkien4.jpg',
+                    url: './src/ui/components/MainWall/images/Posts/tolkien4.jpg',
                     likes: 0,
                     comments: 1
                 }
@@ -34,27 +34,27 @@ class MainWall extends Component {
             taggedClick: false,
             tagged: [
                 {
-                    url: './src/ui/components/MainWall/images/Tagged/BrotherHood.jpg',
+                    url: './src/ui/components/MainWall/images/Tagged/tolkien1.jpg',
                     likes: 20,
                     comments: 4
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien.jpg',
+                    url: './src/ui/components/MainWall/images/Tagged/tolkien2.jpg',
                     likes: 4,
                     comments: 9
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien2.jpg',
+                    url: './src/ui/components/MainWall/images/Tagged/tolkien3.jpg',
                     likes: 4,
                     comments: 1
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tagged/ChristopherTolkien3.jpg',
+                    url: './src/ui/components/MainWall/images/Tagged/tolkien4.jpg',
                     likes: 0,
                     comments: 9
                 },
                 {
-                    url: './src/ui/components/MainWall/images/Tagged/TolkienFilm.jpg',
+                    url: './src/ui/components/MainWall/images/Tagged/tolkien5.jpg',
                     likes: 6,
                     comments: 1
                 }
@@ -74,7 +74,8 @@ class MainWall extends Component {
         };
     }
 
-    handleOnClick(index, postsOrTagged) { //передача данных попапу
+
+    handleOnClick(index, postsOrTagged) { // передача данных попапу
         this.setState({
             popUpState: {
                 ...this.state.popUpState,
@@ -83,7 +84,7 @@ class MainWall extends Component {
                 likes: postsOrTagged[index].likes,
                 comments: postsOrTagged[index].comments
             }
-        })
+        });
     }
 
     renderPopUp() {
@@ -94,54 +95,52 @@ class MainWall extends Component {
     }
 
     render() {
+        const footerLinksInfo =
+            [{name: 'ABOUT US', link: '#'}, {name: 'SUPPORT', link: '#'}, {name: 'PRESS', link: '#'},
+                {name: 'API', link: '#'}, {name: 'JOBS', link: '#'}, {name: 'PRIVACY', link: '#'},
+                {name: 'TERMS', link: '#'}, {name: 'DIRECTORY', link: '#'}, {name: 'PROFILES', link: '#'},
+                {name: 'HASHTAGS', link: '#'}, {name: 'LANGUAGE', link: '#'}];
+
+        const footerLinks = footerLinksInfo.map((obj) => {
+            return (<a className={style.footerLinks} href={obj.link}>{obj.name}</a>);
+        });
         const postsOrTagged = this.state.postsClick ? this.state.posts : this.state.tagged;
 
         return (
             <main className={style.main}>
-                {this.state.popUpState.render ? this.renderPopUp() : null}
+                {this.state.popUpState.render && this.renderPopUp()}
                 <User userInformation={this.state.userInformation}/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
                     <button
-                        className={style.PostsButton}
+                        className={style.postsButton}
                         onClick={() => {
                             this.setState({
                                 postsClick: true,
                                 taggedClick: false
-                            })
+                            });
                         }}
                     >Posts
                     </button>
                     <button
-                        className={style.TaggedButton}
+                        className={style.taggedButton}
                         onClick={() => {
                             this.setState({
                                 postsClick: false,
                                 taggedClick: true
-                            })
+                            });
                         }}
                     >Tagged
                     </button>
                 </div>
-
                 <Posts
                     posts={postsOrTagged}
                     onClick={(index) => {
                         this.handleOnClick(index, postsOrTagged);
                     }}
                 />
-                <footer>
-                    <a href="#">ABOUT US</a>
-                    <a href="#">SUPPORT</a>
-                    <a href="#">PRESS</a>
-                    <a href="#">API</a>
-                    <a href="#">JOBS</a>
-                    <a href="#">PRIVACY</a>
-                    <a href="#">TERMS</a>
-                    <a href="#">DIRECTORY</a>
-                    <a href="#">PROFILES</a>
-                    <a href="#">HASHTAGS</a>
-                    <a href="#">LANGUAGE</a>
+                <footer className={style.footer}>
+                    {footerLinks}
                 </footer>
             </main>
 

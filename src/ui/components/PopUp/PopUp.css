@@ -1,6 +1,8 @@
 @value bodyColor from '../../../css/colors.css';
 @value blueButton from '../../../css/colors.css';
 @value hrColor from '../../../css/colors.css';
+@value popUpBackground from '../../../css/colors.css';
+@value myWhite from '../../../css/colors.css';
 
 .popUp{
     width: 100vw;
@@ -11,13 +13,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,0.5);
+    background-color: popUpBackground;
 }
 
-.popUp hr{
+.hr{
     border: 1px solid hrColor;
     width: 100%;
 }
+
 .photo{
     width: 25vw;
     height: 50vh;
@@ -29,7 +32,9 @@
     background-color: bodyColor;
     display: grid;
     grid-template-rows: 8vh 26vh 10vh 5vh;
+    font-family: 'Roboto', sans-serif;
 }
+
 .header{
     display: flex;
     justify-content: space-between;
@@ -45,22 +50,19 @@
 .name{
     margin-left: 10px;
 }
+
 .name::after{
-    content: '';
-    width: 15px;
-    height: 15px;
-    display: inline-block;
+    @mixin addIconBefore;
     background-image: url(../User/images/verification.png);
-    background-size: 15px 15px;
-    background-repeat: no-repeat;
-    text-align: center;
 }
+
 .follow{
+    @mixin removeDefaultButton;
     margin-left: 5px;
     padding: 0;
-    border: 0;
-    background-color: white;
+    background-color: myWhite;
 }
+
 .points{
     background-image: url(./images/points.png);
     background-size: 17.5px 5px;
@@ -68,13 +70,13 @@
     height: 5px;
 }
 
-
 .commentsField{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.commentsField>ul{
+
+.commentsField>.ul{
     height: calc(100% - 2px);
     display: flex;
     flex-direction: column;
@@ -87,11 +89,13 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
 .buttons{
     display: flex;
     justify-content: space-between;
 }
-.buttons div{
+
+.leftButtons, .heartButtonRed, .heartButton, .commentButton, .upLoadButton, .saveButton{
     width: 50px;
     height: 20px;
     border: 0;
@@ -99,48 +103,53 @@
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
+
 .leftButtons{
     display: flex;
     justify-content: space-between;
 }
+
 .heartButton{
     background-image: url(./images/heartBlack.png);
 }
+
 .heartButtonRed{
     background-image:url(./images/heartRed.jpg);
     background-size: 15px 15px;
+    margin-left: 2px;
 }
-#commentButton{
+
+.commentButton{
     background-image: url(./images/comment.png);
 }
-#upLoadButton{
+
+.upLoadButton{
     background-image: url(./images/upLoad.png);
     background-size: 15px 15px;
 }
-#saveButton{
+
+.saveButton{
     background-image: url(./images/save.png);
 }
 
-
 .comment{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-.comment>div{
     display: flex;
     justify-content: space-between;
 }
-.comment>div>button{
+
+.post{
+    @mixin removeDefaultButton;
     width: 10%;
     margin-right: 5px;
-    border: 0;
-    background-color: white;
     color: blueButton;
+    background-color: bodyColor;
+
 }
-#comment{
+
+.addComment{
     width: 90%;
     padding: 5px;
     outline: none;
     border: 0;
+    background-color: bodyColor;
 }

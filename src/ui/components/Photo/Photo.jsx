@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import style from './Photo.css';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 class Photo extends Component {
     render () {
@@ -14,10 +15,10 @@ class Photo extends Component {
             >
                 <div className={style.hoverPhoto}>
                     <div>
-                        <span id={style.likes}>
+                        <span className={style.likes}>
                             {this.props.likes}
                         </span>
-                        <span id={style.comments}>
+                        <span className={style.comments}>
                             {this.props.comments}
                         </span>
                     </div>
@@ -27,4 +28,9 @@ class Photo extends Component {
     }
 }
 
+Photo.propTypes = {
+    url: PropTypes.string,
+    likes: PropTypes.number,
+    comments: PropTypes.number
+}
 export default Photo;

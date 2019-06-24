@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
+import PropTypes from 'prop-types';
 
 class PopUp extends Component {
     constructor(props) {
@@ -18,13 +19,13 @@ class PopUp extends Component {
                     className={style.photo}
                     src={this.props.popUpInfo.photoUrl}
                     onDoubleClick={() => {
-                        this.setState({liked: true});
+                        this.setState({ liked: true });
                     }}
                 />
                 <div className={style.photoInformation}>
                     <header className={style.header}>
                         <div className={style.user}>
-                            <Avatar size={'50px'}/>
+                            <Avatar size="50px"/>
                             <span className={style.name}>{this.props.userInformation.nick}</span>
                             <span> &bull;</span>
                             <button className={style.follow}>Follow</button>
@@ -32,34 +33,37 @@ class PopUp extends Component {
                         <div className={style.points}></div>
                     </header>
                     <div className={style.commentsField}>
-                        <hr/>
-                        <ul>
+                        <hr className={style.hr}/>
+                        <ul className={style.ul}>
 
                         </ul>
-                        <hr/>
+                        <hr className={style.hr}/>
                     </div>
                     <div className={style.navigation}>
                         <div className={style.buttons}>
                             <div className={style.leftButtons}>
                                 <div className={liked}></div>
-                                <div id={style.commentButton}></div>
-                                <div id={style.upLoadButton}></div>
+                                <div className={style.commentButton}></div>
+                                <div className={style.upLoadButton}></div>
                             </div>
-                            <div id={style.saveButton}></div>
+                            <div className={style.saveButton}></div>
                         </div>
                         <p>{this.props.popUpInfo.likes} likes</p>
-                        <hr/>
+                        <hr className={style.hr}/>
                     </div>
                     <div className={style.comment}>
-                        <div>
-                            <input id={style.comment} type="text" placeholder='Add a comment...'/>
-                            <button>Post</button>
-                        </div>
+                        <input className={style.addComment} type="text" placeholder='Add a comment...'/>
+                        <button className={style.post}>Post</button>
                     </div>
                 </div>
             </div>
         );
     }
+}
+
+PopUp.propTypes = {
+    userInformation: PropTypes.object,
+    popUpInfo: PropTypes.object
 }
 
 export default PopUp;

@@ -1,4 +1,8 @@
-@value blueButton: rgb(30, 140, 237);
-@value bodyColor: rgb(249,249,249);
-@value linkColor: rgb(0, 46, 94);
-@value hrColor: rgb(237, 236, 237);
+@value blueButton: #1e8ced;
+@value bodyColor: #f9f9f9;
+@value linkColor: #002e5e;
+@value hrColor: #edeced;
+@value myGrey: #808080;
+@value myWhite: #FFFFFF;
+@value myBlack: #000000;
+@value popUpBackground: rgba(0,0,0,0.5);
