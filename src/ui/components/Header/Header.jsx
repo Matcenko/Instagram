@@ -13,7 +13,7 @@ class Header extends Component {
 
     render() {
         return (
-            <header className={style.header}>
+            <nav className={style.header}>
                 <button className={style.logo}></button>
                 <input
                     className={classNames(style.search, this.state.searchClick)}
@@ -23,7 +23,7 @@ class Header extends Component {
                     <button className={style.logInButton}>Log In</button>
                     <button className={style.singUpButton}>Sing Up</button>
                 </div>
-            </header>
+            </nav>
         );
     }
 }

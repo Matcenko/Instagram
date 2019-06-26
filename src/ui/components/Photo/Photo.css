@@ -2,8 +2,11 @@
 @value popUpBackground from '../../../css/colors.css';
 
 .photo{
-    padding: 0;
     @mixin removeDefaultButton;
+    width: 31%;
+    height: 300px;
+    margin-bottom: 3%;
+    padding: 0;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
@@ -19,7 +22,7 @@
     background-color: popUpBackground;
 }
 
-.likes,.comments{
+.likes, .comments{
     margin-right: 10px;
     font-size: 20px;
     color: myWhite;

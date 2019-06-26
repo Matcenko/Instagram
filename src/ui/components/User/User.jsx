@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Avatar from '../Avatar/Avatar.jsx';
 import classNames from 'classnames';
 import style from './User.css';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 class User extends Component {
     constructor (props) {
@@ -17,11 +17,11 @@ class User extends Component {
 
     render () {
         return (
-            <div className={style.user}>
+            <header className={style.user}>
                 <Avatar/>
                 <div className={style.userInformation}>
                     <div className={style.nameAndFollow}>
-                        <span className={style.nickName}>{this.props.userInformation.nick}</span>
+                        <span className={style.nickName}> {this.props.userInformation.nick}</span>
                         <button
                             className={ classNames(style.followButton, !this.state.follow && style.followingButton)}
                             onClick={() => {
@@ -44,7 +44,7 @@ class User extends Component {
                         <a className={style.bold} href={this.props.userInformation.site}>{this.props.userInformation.site}</a>
                     </div>
                 </div>
-            </div>
+            </header>
         );
     }
 }

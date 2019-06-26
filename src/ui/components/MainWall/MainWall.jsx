@@ -8,107 +8,122 @@ class MainWall extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postsClick: true,
+            postsType: true, // переменная для определения рендеринга posts или tagged
             posts: [
                 {
                     url: './src/ui/components/MainWall/images/Posts/tolkien1.jpg',
                     likes: 14,
-                    comments: 1
+                    comments: ['nice photo!', 'cool'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Posts/tolkien2.jpg',
                     likes: 19,
-                    comments: 1
+                    comments: ['good photo!', 'nice'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Posts/tolkien3.jpg',
                     likes: 0,
-                    comments: 1
+                    comments: ['I really like your books!!!'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Posts/tolkien4.jpg',
                     likes: 0,
-                    comments: 1
+                    comments: ['cool', 'cool', 'cool', 'cool'],
+                    liked: false
                 }
             ],
-            taggedClick: false,
             tagged: [
                 {
                     url: './src/ui/components/MainWall/images/Tagged/tolkien1.jpg',
                     likes: 20,
-                    comments: 4
+                    comments: ['follow me'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Tagged/tolkien2.jpg',
                     likes: 4,
-                    comments: 9
+                    comments: ['cool', 'good', 'nice'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Tagged/tolkien3.jpg',
                     likes: 4,
-                    comments: 1
+                    comments: ['cool'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Tagged/tolkien4.jpg',
                     likes: 0,
-                    comments: 9
+                    comments: ['ok'],
+                    liked: false
                 },
                 {
                     url: './src/ui/components/MainWall/images/Tagged/tolkien5.jpg',
                     likes: 6,
-                    comments: 1
+                    comments: ['bad photo'],
+                    liked: false
                 }
             ],
-            popUpState: {
-                render: false,
-                photoUrl: null,
-                likes: null,
-                comments: null
-            },
             userInformation: {
                 nick: 'JRRT',
                 fullName: 'John Ronald Reuel Tolkien',
                 profession: 'Writer, poet, philologist, and academic',
                 site: 'tolkien.co.uk'
-            }
+            },
+            flag: null
         };
     }
 
-
-    handleOnClick(index, postsOrTagged) { // передача данных попапу
+    handleOnClickChangePost(index) { // передача данных попапу
         this.setState({
-            popUpState: {
-                ...this.state.popUpState,
-                render: true,
-                photoUrl: postsOrTagged[index].url,
-                likes: postsOrTagged[index].likes,
-                comments: postsOrTagged[index].comments
-            }
+            flag: index
         });
     }
 
-    renderPopUp() {
+    handleOnClickAddLike(postsOrTagged) {
+        const post = postsOrTagged.map((post, index) => {
+            if (index === this.state.flag) {
+                const {url, likes, comments} = post;
+                return {url, likes: likes + 1, comments, liked: true};
+            } else return post;
+        });
+        this.state.postsType ?
+            this.setState({
+                posts: post
+            }) :
+            this.setState({
+                tagged: post
+            })
+    }
+
+
+    renderPopUp(postsOrTagged) {
         return <PopUp
-            popUpInfo={this.state.popUpState}
+            popUpInfo={postsOrTagged[this.state.flag]}
             userInformation={this.state.userInformation}
+            addLike={() => this.handleOnClickAddLike(postsOrTagged)}
         />;
     }
 
     render() {
         const footerLinksInfo =
-            [{name: 'ABOUT US', link: '#'}, {name: 'SUPPORT', link: '#'}, {name: 'PRESS', link: '#'},
-                {name: 'API', link: '#'}, {name: 'JOBS', link: '#'}, {name: 'PRIVACY', link: '#'},
-                {name: 'TERMS', link: '#'}, {name: 'DIRECTORY', link: '#'}, {name: 'PROFILES', link: '#'},
-                {name: 'HASHTAGS', link: '#'}, {name: 'LANGUAGE', link: '#'}];
+            [{name: 'ABOUT US', link: '#1'}, {name: 'SUPPORT', link: '#2'}, {name: 'PRESS', link: '#3'},
+                {name: 'API', link: '#4'}, {name: 'JOBS', link: '5#'}, {name: 'PRIVACY', link: '#6'},
+                {name: 'TERMS', link: '#7'}, {name: 'DIRECTORY', link: '#8'}, {name: 'PROFILES', link: '#9'},
+                {name: 'HASHTAGS', link: '#10'}, {name: 'LANGUAGE', link: '#11'}];
 
         const footerLinks = footerLinksInfo.map((obj) => {
-            return (<a className={style.footerLinks} href={obj.link}>{obj.name}</a>);
+            return (<a className={style.footerLinks} key={obj.link} href={obj.link}>{obj.name}</a>);
         });
-        const postsOrTagged = this.state.postsClick ? this.state.posts : this.state.tagged;
+
+        const postsOrTagged = this.state.postsType ? this.state.posts : this.state.tagged;
 
         return (
             <main className={style.main}>
-                {this.state.popUpState.render && this.renderPopUp()}
+                {(this.state.flag !== null) && this.renderPopUp(postsOrTagged)}
                 <User userInformation={this.state.userInformation}/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
@@ -116,8 +131,7 @@ class MainWall extends Component {
                         className={style.postsButton}
                         onClick={() => {
                             this.setState({
-                                postsClick: true,
-                                taggedClick: false
+                                postsType: true
                             });
                         }}
                     >Posts
@@ -126,8 +140,7 @@ class MainWall extends Component {
                         className={style.taggedButton}
                         onClick={() => {
                             this.setState({
-                                postsClick: false,
-                                taggedClick: true
+                                postsType: false
                             });
                         }}
                     >Tagged
@@ -136,7 +149,7 @@ class MainWall extends Component {
                 <Posts
                     posts={postsOrTagged}
                     onClick={(index) => {
-                        this.handleOnClick(index, postsOrTagged);
+                        this.handleOnClickChangePost(index, postsOrTagged);
                     }}
                 />
                 <footer className={style.footer}>
