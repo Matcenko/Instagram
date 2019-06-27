@@ -16,6 +16,10 @@
     background-color: white;
 }
 
+.headerScrollClass{
+    height: 40px;
+}
+
 .logo {
     @mixin removeDefaultButton;
     width: 250px;

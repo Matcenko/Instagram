@@ -2,21 +2,41 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 import style from './Header.css';
 
-
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchClick: null
+            headerScrollClass: null
         };
+        this.listenScrollEvent = this.listenScrollEvent.bind(this);
+    }
+
+    componentDidMount () {
+        window.addEventListener('scroll', this.listenScrollEvent);
+    }
+    componentWillUnmount (){
+        window.removeEventListener('scroll', this.listenScrollEvent);
+    }
+
+    listenScrollEvent() {
+        if (window.scrollY > 100) {
+            this.setState({
+                headerScrollClass: style.headerScrollClass
+            })
+        }
+        if (window.scrollY < 100){
+            this.setState({
+                headerScrollClass: ''
+            })
+        }
     }
 
     render() {
         return (
-            <nav className={style.header}>
-                <button className={style.logo}></button>
+            <nav className={classNames(style.header, this.state.headerScrollClass)}>
+                <button className={style.logo}/>
                 <input
-                    className={classNames(style.search, this.state.searchClick)}
+                    className={style.search}
                     placeholder='Search'
                 />
                 <div>
@@ -27,7 +47,6 @@ class Header extends Component {
         );
     }
 }
-
 
 
 export default Header;

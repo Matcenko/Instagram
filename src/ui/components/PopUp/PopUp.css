@@ -7,13 +7,14 @@
 .popUp{
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: popUpBackground;
+    z-index: 1;
 }
 
 .hr{
@@ -60,7 +61,7 @@
     @mixin removeDefaultButton;
     margin-left: 5px;
     padding: 0;
-    background-color: myWhite;
+    background-color: bodyColor;
 }
 
 .points{

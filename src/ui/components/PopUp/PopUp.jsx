@@ -5,12 +5,20 @@ import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
 
 class PopUp extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             comment: ''
         };
+    }
+
+    componentDidMount() {
+        this.props.closePopUpByKeyword();
+        document.body.style.overflow = 'hidden';
+    }
+
+    componentWillUnmount () {
+        document.body.style.overflow = 'auto';
     }
 
     handleOnClickAddComment(e) {
@@ -24,12 +32,20 @@ class PopUp extends Component {
     }
 
     render() {
-        const comments = this.props.popUpInfo.comments.map((comment, index) => {
-            return (<li key={comment + index}>{comment}</li>);
-        });
-        const liked = this.props.popUpInfo.liked ? style.heartButtonRed : style.heartButton;
+        const
+            comments = this.props.popUpInfo.comments.map((comment, index) => {
+                return (<li key={comment + index}>{comment}</li>);
+            });
+        const
+            liked = this.props.popUpInfo.liked ? style.heartButtonRed : style.heartButton;
+
         return (
-            <div className={style.popUp}>
+            <div
+                className={style.popUp}
+                onClick={() => {
+                    this.props.closePopUp();
+                }}
+            >
                 <img
                     className={style.photo}
                     src={this.props.popUpInfo.url}
@@ -37,8 +53,16 @@ class PopUp extends Component {
                         this.setState({liked: true});
                         this.props.addLike();
                     }}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
                 />
-                <div className={style.photoInformation}>
+                <div
+                    className={style.photoInformation}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
                     <header className={style.header}>
                         <div className={style.user}>
                             <Avatar size="50px"/>
@@ -50,19 +74,19 @@ class PopUp extends Component {
                     </header>
                     <div className={style.commentsField}>
                         <hr className={style.hr}/>
-
-
                         <ul className={style.ul}>
                             {comments}
                         </ul>
-
-
                         <hr className={style.hr}/>
                     </div>
                     <div className={style.navigation}>
                         <div className={style.buttons}>
                             <div className={style.leftButtons}>
-                                <div className={liked}/>
+                                <div
+                                    className={liked}
+                                    onClick={() =>
+                                        this.props.addLike()}
+                                />
                                 <div className={style.commentButton}/>
                                 <div className={style.upLoadButton}/>
                             </div>
@@ -88,7 +112,7 @@ class PopUp extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
@@ -96,6 +120,7 @@ PopUp.propTypes = {
     userInformation: PropTypes.object,
     popUpInfo: PropTypes.object,
     addLike: PropTypes.func,
+    closePopUp: PropTypes.func
 };
 
 export default PopUp;

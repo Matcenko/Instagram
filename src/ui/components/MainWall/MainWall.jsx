@@ -73,38 +73,67 @@ class MainWall extends Component {
                 profession: 'Writer, poet, philologist, and academic',
                 site: 'tolkien.co.uk'
             },
-            flag: null
+            renderPopUp: undefined
         };
     }
 
     handleOnClickChangePost(index) { // передача данных попапу
         this.setState({
-            flag: index
+            renderPopUp: index
         });
     }
 
     handleOnClickAddLike(postsOrTagged) {
+        if (postsOrTagged[this.state.renderPopUp].liked) {
+            return;
+        }
+
         const post = postsOrTagged.map((post, index) => {
-            if (index === this.state.flag) {
+            if (index === this.state.renderPopUp) {
                 const {url, likes, comments} = post;
                 return {url, likes: likes + 1, comments, liked: true};
             } else return post;
         });
-        this.state.postsType ?
-            this.setState({
+        this.state.postsType
+            ? this.setState({
                 posts: post
-            }) :
-            this.setState({
-                tagged: post
             })
+            : this.setState({
+                tagged: post
+            });
     }
 
+    closePopUp() {
+        this.setState({
+            renderPopUp: undefined
+        });
+    }
+
+    closePopUpByKeyword(postsOrTagged) {
+        window.addEventListener('keydown', (e) => {
+            if (e.keyCode === 27) {
+                e.preventDefault();
+                this.closePopUp();
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            if ((e.keyCode === 37) && (this.state.renderPopUp > 0)) {
+                this.handleOnClickChangePost(this.state.renderPopUp - 1);
+            }
+            else if ((e.keyCode === 39) && (this.state.renderPopUp < postsOrTagged.length - 1)) {
+                this.handleOnClickChangePost(this.state.renderPopUp + 1);
+            }
+        });
+    };// добавляем два EventListener, чтобы иметь возможность отловить дефолтное
+    // поведение esс и, при этом, избежать многократного перелистывания постов зажатой стрелкой
 
     renderPopUp(postsOrTagged) {
         return <PopUp
-            popUpInfo={postsOrTagged[this.state.flag]}
+            popUpInfo={postsOrTagged[this.state.renderPopUp]}
             userInformation={this.state.userInformation}
             addLike={() => this.handleOnClickAddLike(postsOrTagged)}
+            closePopUp={() => this.closePopUp()}
+            closePopUpByKeyword={() => this.closePopUpByKeyword(postsOrTagged)}
         />;
     }
 
@@ -120,10 +149,9 @@ class MainWall extends Component {
         });
 
         const postsOrTagged = this.state.postsType ? this.state.posts : this.state.tagged;
-
         return (
-            <main className={style.main}>
-                {(this.state.flag !== null) && this.renderPopUp(postsOrTagged)}
+            <main className={ style.main}>
+                {(this.state.renderPopUp !== undefined) && this.renderPopUp(postsOrTagged)}
                 <User userInformation={this.state.userInformation}/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
