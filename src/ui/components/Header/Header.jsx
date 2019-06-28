@@ -6,7 +6,8 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            headerScrollClass: null
+            headerScrollClass: null,
+            logoScrollClass: style.logo
         };
         this.listenScrollEvent = this.listenScrollEvent.bind(this);
     }
@@ -21,12 +22,14 @@ class Header extends Component {
     listenScrollEvent() {
         if (window.scrollY > 100) {
             this.setState({
-                headerScrollClass: style.headerScrollClass
+                headerScrollClass: style.headerScrollClass,
+                logoScrollClass: style.logoScroll
             })
         }
         if (window.scrollY < 100){
             this.setState({
-                headerScrollClass: ''
+                headerScrollClass: '',
+                logoScrollClass: style.logo
             })
         }
     }
@@ -34,7 +37,7 @@ class Header extends Component {
     render() {
         return (
             <nav className={classNames(style.header, this.state.headerScrollClass)}>
-                <button className={style.logo}/>
+                <button className={this.state.logoScrollClass}/>
                 <input
                     className={style.search}
                     placeholder='Search'

@@ -20,14 +20,22 @@
     height: 40px;
 }
 
-.logo {
+.logo, .logoScroll{
     @mixin removeDefaultButton;
     width: 250px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.logo{
     height: 78px;
     background-image: url("./images/instagramLogo.png");
-    background-repeat: no-repeat;
     background-color: myWhite;
-    cursor: pointer;
+}
+
+.logoScroll{
+    height: 38px;
+    background-image: url("./images/instagramLogoMini.png");
+    background-size: 50px 38px;
 }
 
 .search {
