@@ -50,5 +50,5 @@ class User extends Component {
 }
 User.propTypes = {
     userInformation: PropTypes.object
-}
+};
 export default User;

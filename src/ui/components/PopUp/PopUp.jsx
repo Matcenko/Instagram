@@ -1,18 +1,18 @@
 // eslint-disable-next-line no-restricted-imports
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
 
 class PopUp extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             comment: ''
         };
     }
 
-    componentDidMount() {
+    componentDidMount () {
         this.props.closePopUpByKeyword();
         document.body.style.overflow = 'hidden';
     }
@@ -21,17 +21,17 @@ class PopUp extends Component {
         document.body.style.overflow = 'auto';
     }
 
-    handleOnClickAddComment(e) {
+    handleOnClickAddComment (e) {
         this.setState({
             comment: e.target.value
         });
     }
 
-    handleOnClickPostComment() {
+    handleOnClickPostComment () {
         this.refs.input.value = '';
     }
 
-    render() {
+    render () {
         const
             comments = this.props.popUpInfo.comments.map((comment, index) => {
                 return (<li key={comment + index}>{comment}</li>);
@@ -50,7 +50,7 @@ class PopUp extends Component {
                     className={style.photo}
                     src={this.props.popUpInfo.url}
                     onDoubleClick={() => {
-                        this.setState({liked: true});
+                        this.setState({ liked: true });
                         this.props.addLike();
                     }}
                     onClick={(e) => {
@@ -112,7 +112,7 @@ class PopUp extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

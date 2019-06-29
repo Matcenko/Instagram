@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './Header.css';
 
 class Header extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             headerScrollClass: null,
@@ -15,26 +15,26 @@ class Header extends Component {
     componentDidMount () {
         window.addEventListener('scroll', this.listenScrollEvent);
     }
-    componentWillUnmount (){
+    componentWillUnmount () {
         window.removeEventListener('scroll', this.listenScrollEvent);
     }
 
-    listenScrollEvent() {
+    listenScrollEvent () {
         if (window.scrollY > 100) {
             this.setState({
                 headerScrollClass: style.headerScrollClass,
                 logoScrollClass: style.logoScroll
-            })
+            });
         }
-        if (window.scrollY < 100){
+        if (window.scrollY < 100) {
             this.setState({
                 headerScrollClass: '',
                 logoScrollClass: style.logo
-            })
+            });
         }
     }
 
-    render() {
+    render () {
         return (
             <nav className={classNames(style.header, this.state.headerScrollClass)}>
                 <button className={this.state.logoScrollClass}/>
@@ -50,6 +50,5 @@ class Header extends Component {
         );
     }
 }
-
 
 export default Header;

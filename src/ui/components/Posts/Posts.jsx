@@ -28,5 +28,5 @@ class Posts extends Component {
 Posts.propTypes = {
     posts: PropTypes.array,
     onClick: PropTypes.func
-}
+};
 export default Posts;

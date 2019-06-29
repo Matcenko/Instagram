@@ -13,6 +13,7 @@
     height: 1.25px;
     margin-top: 20px;
     border: 0;
+    z-index: 2;
     background-color: hrColor;
 }
 
@@ -23,9 +24,11 @@
 
 .postsButton, .taggedButton{
     @mixin removeDefaultButton;
+    margin-top: -9px;
     margin-right: 10px;
     font-size: 18px;
     cursor: pointer;
+    border-top: 1px solid hrColor;
     background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }
@@ -38,7 +41,9 @@
     @mixin addIconBefore;
     background-image: url(./images/tagged.png);
 }
-
+.buttonClicked{
+    border-top: 1px solid black;
+}
 .footer{
     margin-top: 8px;
     margin-bottom: 18px;

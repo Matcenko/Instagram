@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import classNames from 'classnames';
 import style from './MainWall.css';
 import User from '../User/User';
 import Posts from '../Posts/Posts';
 import PopUp from '../PopUp/PopUp';
 
 class MainWall extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             postsType: true, // переменная для определения рендеринга posts или tagged
@@ -77,21 +78,21 @@ class MainWall extends Component {
         };
     }
 
-    handleOnClickChangePost(index) { // передача данных попапу
+    handleOnClickChangePost (index) { // передача данных попапу
         this.setState({
             renderPopUp: index
         });
     }
 
-    handleOnClickAddLike(postsOrTagged) {
+    handleOnClickAddLike (postsOrTagged) {
         if (postsOrTagged[this.state.renderPopUp].liked) {
             return;
         }
 
         const post = postsOrTagged.map((post, index) => {
             if (index === this.state.renderPopUp) {
-                const {url, likes, comments} = post;
-                return {url, likes: likes + 1, comments, liked: true};
+                const { url, likes, comments } = post;
+                return { url, likes: likes + 1, comments, liked: true };
             } else return post;
         });
         this.state.postsType
@@ -103,13 +104,13 @@ class MainWall extends Component {
             });
     }
 
-    closePopUp() {
+    closePopUp () {
         this.setState({
             renderPopUp: undefined
         });
     }
 
-    closePopUpByKeyword(postsOrTagged) {
+    closePopUpByKeyword (postsOrTagged) {
         window.addEventListener('keydown', (e) => {
             if (e.keyCode === 27) {
                 e.preventDefault();
@@ -119,15 +120,14 @@ class MainWall extends Component {
         window.addEventListener('keyup', (e) => {
             if ((e.keyCode === 37) && (this.state.renderPopUp > 0)) {
                 this.handleOnClickChangePost(this.state.renderPopUp - 1);
-            }
-            else if ((e.keyCode === 39) && (this.state.renderPopUp < postsOrTagged.length - 1)) {
+            } else if ((e.keyCode === 39) && (this.state.renderPopUp < postsOrTagged.length - 1)) {
                 this.handleOnClickChangePost(this.state.renderPopUp + 1);
             }
         });
     };// добавляем два EventListener, чтобы иметь возможность отловить дефолтное
     // поведение esс и, при этом, избежать многократного перелистывания постов зажатой стрелкой
 
-    renderPopUp(postsOrTagged) {
+    renderPopUp (postsOrTagged) {
         return <PopUp
             popUpInfo={postsOrTagged[this.state.renderPopUp]}
             userInformation={this.state.userInformation}
@@ -137,12 +137,12 @@ class MainWall extends Component {
         />;
     }
 
-    render() {
+    render () {
         const footerLinksInfo =
-            [{name: 'ABOUT US', link: '#1'}, {name: 'SUPPORT', link: '#2'}, {name: 'PRESS', link: '#3'},
-                {name: 'API', link: '#4'}, {name: 'JOBS', link: '5#'}, {name: 'PRIVACY', link: '#6'},
-                {name: 'TERMS', link: '#7'}, {name: 'DIRECTORY', link: '#8'}, {name: 'PROFILES', link: '#9'},
-                {name: 'HASHTAGS', link: '#10'}, {name: 'LANGUAGE', link: '#11'}];
+            [{ name: 'ABOUT US', link: '#1' }, { name: 'SUPPORT', link: '#2' }, { name: 'PRESS', link: '#3' },
+                { name: 'API', link: '#4' }, { name: 'JOBS', link: '5#' }, { name: 'PRIVACY', link: '#6' },
+                { name: 'TERMS', link: '#7' }, { name: 'DIRECTORY', link: '#8' }, { name: 'PROFILES', link: '#9' },
+                { name: 'HASHTAGS', link: '#10' }, { name: 'LANGUAGE', link: '#11' }];
 
         const footerLinks = footerLinksInfo.map((obj) => {
             return (<a className={style.footerLinks} key={obj.link} href={obj.link}>{obj.name}</a>);
@@ -156,7 +156,7 @@ class MainWall extends Component {
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
                     <button
-                        className={style.postsButton}
+                        className={classNames(style.postsButton, this.state.postsType && style.buttonClicked)}
                         onClick={() => {
                             this.setState({
                                 postsType: true
@@ -165,7 +165,7 @@ class MainWall extends Component {
                     >Posts
                     </button>
                     <button
-                        className={style.taggedButton}
+                        className={classNames(style.taggedButton, !this.state.postsType && style.buttonClicked)}
                         onClick={() => {
                             this.setState({
                                 postsType: false

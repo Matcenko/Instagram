@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-restricted-imports
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import style from './Photo.css';
 
 class Photo extends Component {
-    render() {
+    render () {
         return (
             <button
                 className={style.photo}
@@ -35,6 +35,6 @@ class Photo extends Component {
 Photo.propTypes = {
     url: PropTypes.string,
     likes: PropTypes.number,
-    comments: PropTypes.array,
-}
+    comments: PropTypes.array
+};
 export default Photo;

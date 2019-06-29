@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import style from './Avatar.css';
 import PropTypes from 'prop-types';
 
 class Avatar extends Component {
-    renderAvatar(size) {
+    renderAvatar (size) {
         return (<img
             className={style.avatar}
             style={{
@@ -14,7 +14,7 @@ class Avatar extends Component {
         />);
     }
 
-    render() {
+    render () {
         return (
             <div>
                 {this.renderAvatar(this.props.size)}
