@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Avatar from '../Avatar/Avatar.jsx';
 import classNames from 'classnames';
 import style from './User.css';
-import PropTypes from 'prop-types';
 
 class User extends Component {
     constructor (props) {
@@ -48,7 +48,10 @@ class User extends Component {
         );
     }
 }
-User.propTypes = {
-    userInformation: PropTypes.object
-};
-export default User;
+
+export default connect(
+    state => ({
+        userInformation: state.postsInfo.userInformation
+    }),
+    dispatch => ({})
+)(User);

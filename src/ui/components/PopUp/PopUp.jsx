@@ -1,43 +1,59 @@
-// eslint-disable-next-line no-restricted-imports
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
+import { connect } from 'react-redux';
 
 class PopUp extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
-            comment: ''
+            comment: '',
+            postsOrTagged: this.props.state.postsType ? this.props.state.posts : this.props.state.tagged
         };
     }
 
-    componentDidMount () {
-        this.props.closePopUpByKeyword();
+    componentDidMount() {
+        this.changePopUpByKeyword(this.props.postsOrTagged);
         document.body.style.overflow = 'hidden';
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         document.body.style.overflow = 'auto';
     }
 
-    handleOnClickAddComment (e) {
+    changePopUpByKeyword(postsOrTagged) {
+        window.addEventListener('keydown', (e) => {
+            if (e.keyCode === 27) {
+                e.preventDefault();
+                this.props.closePopUp();
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            if ((e.keyCode === 37) && (this.props.state.renderPopUp > 0)) {
+                this.props.сhangePopup(this.props.state.renderPopUp - 1);
+            } else if ((e.keyCode === 39) && (this.props.state.renderPopUp < postsOrTagged.length - 1)) {
+                this.props.сhangePopup(this.props.state.renderPopUp + 1);
+            }
+        });
+    };
+
+    handleOnClickAddComment(e) {
         this.setState({
             comment: e.target.value
         });
     }
 
-    handleOnClickPostComment () {
+    handleOnClickPostComment() {
         this.refs.input.value = '';
     }
 
-    render () {
-        const
-            comments = this.props.popUpInfo.comments.map((comment, index) => {
-                return (<li key={comment + index}>{comment}</li>);
-            });
-        const
-            liked = this.props.popUpInfo.liked ? style.heartButtonRed : style.heartButton;
+    render() {
+        const postsOrTagged = this.props.state.postsType ? this.props.state.posts : this.props.state.tagged;
+        const popUpInfo = postsOrTagged[this.props.state.renderPopUp]
+        const comments = popUpInfo.comments.map((comment, index) => {
+            return (<li key={comment + index}>{comment}</li>);
+        });
+        const liked = popUpInfo.liked ? style.heartButtonRed : style.heartButton;
 
         return (
             <div
@@ -48,10 +64,10 @@ class PopUp extends Component {
             >
                 <img
                     className={style.photo}
-                    src={this.props.popUpInfo.url}
+                    src={popUpInfo.url}
                     onDoubleClick={() => {
-                        this.setState({ liked: true });
-                        this.props.addLike();
+                        this.setState({liked: true});
+                        this.props.addLike(this.props.postsOrTagged);
                     }}
                     onClick={(e) => {
                         e.stopPropagation();
@@ -66,7 +82,7 @@ class PopUp extends Component {
                     <header className={style.header}>
                         <div className={style.user}>
                             <Avatar size="50px"/>
-                            <span className={style.name}>{this.props.userInformation.nick}</span>
+                            <span className={style.name}>{this.props.state.userInformation.nick}</span>
                             <span> &bull;</span>
                             <button className={style.follow}>Follow</button>
                         </div>
@@ -85,14 +101,14 @@ class PopUp extends Component {
                                 <div
                                     className={liked}
                                     onClick={() =>
-                                        this.props.addLike()}
+                                        this.props.addLike(this.props.postsOrTagged)}
                                 />
                                 <div className={style.commentButton}/>
                                 <div className={style.upLoadButton}/>
                             </div>
                             <div className={style.saveButton}/>
                         </div>
-                        <p>{this.props.popUpInfo.likes} likes</p>
+                        <p>{popUpInfo.likes} likes</p>
                         <hr className={style.hr}/>
                     </div>
                     <div className={style.comment}>
@@ -116,11 +132,13 @@ class PopUp extends Component {
     }
 }
 
-PopUp.propTypes = {
-    userInformation: PropTypes.object,
-    popUpInfo: PropTypes.object,
-    addLike: PropTypes.func,
-    closePopUp: PropTypes.func
-};
-
-export default PopUp;
+export default connect(
+    state => ({
+        state: state.postsInfo
+    }),
+    dispatch => ({
+        сhangePopup: (index) => dispatch({type: 'CHANGE_POPUP', payload: index}),
+        closePopUp: () => dispatch({type: 'CLOSE_POPUP'}),
+        addLike: (postsOrTagged) => dispatch({type: 'ADD_LIKE', payload: postsOrTagged})
+    })
+)(PopUp);

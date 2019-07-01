@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Photo from '../Photo/Photo';
 import style from './Posts.css';
+import { connect } from 'react-redux';
 
 class Posts extends Component {
     render () {
@@ -12,7 +13,7 @@ class Posts extends Component {
                 url={'url(' + photo.url + ')'}
                 likes={photo.likes}
                 comments={photo.comments}
-                onClick={() => { this.props.onClick(index); }}
+                onClick={() => { this.props.сhangePopup(index); }}
                 key={index}
                 style={middlePostStyle}
             />);
@@ -26,7 +27,16 @@ class Posts extends Component {
 }
 
 Posts.propTypes = {
-    posts: PropTypes.array,
-    onClick: PropTypes.func
+    posts: PropTypes.array
 };
-export default Posts;
+
+export default connect(
+    state => ({
+        state: state.postsInfo
+    }),
+    dispatch => ({
+        сhangePopup: (index) => {
+            dispatch({ type: 'CHANGE_POPUP', payload: index });
+        }
+    })
+)(Posts);
