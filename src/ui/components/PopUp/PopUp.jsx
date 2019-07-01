@@ -1,27 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
 import { connect } from 'react-redux';
 
 class PopUp extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
-            comment: '',
-            postsOrTagged: this.props.state.postsType ? this.props.state.posts : this.props.state.tagged
+            comment: ''
         };
     }
 
-    componentDidMount() {
-        this.changePopUpByKeyword(this.props.postsOrTagged);
+    componentDidMount () {
+        this.changePopUpByKeyword();
         document.body.style.overflow = 'hidden';
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         document.body.style.overflow = 'auto';
     }
 
-    changePopUpByKeyword(postsOrTagged) {
+    changePopUpByKeyword () {
+        const postsOrTagged = this.props.state.postsType ? this.props.state.posts : this.props.state.tagged;
         window.addEventListener('keydown', (e) => {
             if (e.keyCode === 27) {
                 e.preventDefault();
@@ -37,19 +37,19 @@ class PopUp extends Component {
         });
     };
 
-    handleOnClickAddComment(e) {
+    handleOnClickAddComment (e) {
         this.setState({
             comment: e.target.value
         });
     }
 
-    handleOnClickPostComment() {
+    handleOnClickPostComment () {
         this.refs.input.value = '';
     }
 
-    render() {
+    render () {
         const postsOrTagged = this.props.state.postsType ? this.props.state.posts : this.props.state.tagged;
-        const popUpInfo = postsOrTagged[this.props.state.renderPopUp]
+        const popUpInfo = postsOrTagged[this.props.state.renderPopUp];
         const comments = popUpInfo.comments.map((comment, index) => {
             return (<li key={comment + index}>{comment}</li>);
         });
@@ -66,8 +66,8 @@ class PopUp extends Component {
                     className={style.photo}
                     src={popUpInfo.url}
                     onDoubleClick={() => {
-                        this.setState({liked: true});
-                        this.props.addLike(this.props.postsOrTagged);
+                        this.setState({ liked: true });
+                        this.props.addLike(postsOrTagged);
                     }}
                     onClick={(e) => {
                         e.stopPropagation();
@@ -101,7 +101,7 @@ class PopUp extends Component {
                                 <div
                                     className={liked}
                                     onClick={() =>
-                                        this.props.addLike(this.props.postsOrTagged)}
+                                        this.props.addLike(postsOrTagged)}
                                 />
                                 <div className={style.commentButton}/>
                                 <div className={style.upLoadButton}/>
@@ -122,7 +122,10 @@ class PopUp extends Component {
                             placeholder='Add a comment...'/>
                         <button
                             className={style.post}
-                            onClick={() => this.handleOnClickPostComment()}
+                            onClick={() => {
+                                this.handleOnClickPostComment();
+                                this.props.addComment(postsOrTagged, this.state.comment);
+                            }}
                         >Post
                         </button>
                     </div>
@@ -137,8 +140,9 @@ export default connect(
         state: state.postsInfo
     }),
     dispatch => ({
-        сhangePopup: (index) => dispatch({type: 'CHANGE_POPUP', payload: index}),
-        closePopUp: () => dispatch({type: 'CLOSE_POPUP'}),
-        addLike: (postsOrTagged) => dispatch({type: 'ADD_LIKE', payload: postsOrTagged})
+        сhangePopup: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index }),
+        closePopUp: () => dispatch({ type: 'CLOSE_POPUP' }),
+        addLike: (postsOrTagged) => dispatch({ type: 'ADD_LIKE', payload: postsOrTagged }),
+        addComment: (postsOrTagged, comment) => dispatch({ type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment })
     })
 )(PopUp);

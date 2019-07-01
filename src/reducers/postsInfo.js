@@ -100,6 +100,17 @@ export default function (state = initialState, action) {
             } else return post;
         });
         return state.postsType ? { ...state, posts: posts } : { ...state, tagged: posts };
+
+    case 'ADD_COMMENT':
+        const commentaries = action.payload.map((post, index) => {
+            if (index === state.renderPopUp) {
+                const { comments } = post;
+                comments.push(action.comment);
+                return { ...post, comments };
+            } else return post;
+        });
+        return state.postsType ? { ...state, posts: commentaries } : { ...state, tagged: commentaries };
+
     default:
         return state;
     }

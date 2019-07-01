@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-restricted-imports
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import style from './Photo.css';
