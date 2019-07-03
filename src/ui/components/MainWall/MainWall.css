@@ -24,6 +24,7 @@
 
 .postsButton, .taggedButton{
     @mixin removeDefaultButton;
+    width: 100px;
     margin-top: -9px;
     margin-right: 10px;
     font-size: 18px;

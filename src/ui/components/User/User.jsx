@@ -15,6 +15,12 @@ class User extends Component {
         };
     }
 
+    handleToFollowClock = () => {
+        this.setState({
+            followers: this.state.follow ? this.state.followers - 1 : this.state.followers + 1,
+            follow: !this.state.follow
+        });
+    }
     render () {
         return (
             <header className={style.user}>
@@ -24,12 +30,7 @@ class User extends Component {
                         <span className={style.nickName}> {this.props.userInformation.nick}</span>
                         <button
                             className={ classNames(style.followButton, !this.state.follow && style.followingButton)}
-                            onClick={() => {
-                                this.setState({
-                                    followers: this.state.follow ? this.state.followers - 1 : this.state.followers + 1,
-                                    follow: !this.state.follow
-                                });
-                            }}
+                            onClick={this.handleToFollowClock}
                         >{this.state.follow ? 'Following' : 'Follow'}
                         </button>
                     </div>
@@ -41,7 +42,7 @@ class User extends Component {
                     <div className={style.nameWorkWeb}>
                         <span>{this.props.userInformation.fullName}</span>
                         <span>{this.props.userInformation.profession} </span>
-                        <a className={style.bold} href={this.props.userInformation.site}>{this.props.userInformation.site}</a>
+                        <a className={style.bold} href={`https:\/\/${this.props.userInformation.site}`}>{this.props.userInformation.site}</a>
                     </div>
                 </div>
             </header>

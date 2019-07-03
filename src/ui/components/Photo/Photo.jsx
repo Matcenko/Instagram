@@ -9,8 +9,8 @@ class Photo extends Component {
                 className={style.photo}
                 style={{
                     backgroundImage: this.props.url,
-                    marginRight: this.props.style,
-                    marginLeft: this.props.style
+                    marginRight: this.props.margin,
+                    marginLeft: this.props.margin
                 }}
                 onClick={() => {
                     this.props.onClick();
@@ -34,6 +34,8 @@ class Photo extends Component {
 Photo.propTypes = {
     url: PropTypes.string,
     likes: PropTypes.number,
-    comments: PropTypes.array
+    comments: PropTypes.array,
+    onClick: PropTypes.func,
+    margin: PropTypes.string
 };
 export default Photo;

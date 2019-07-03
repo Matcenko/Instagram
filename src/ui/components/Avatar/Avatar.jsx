@@ -1,26 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './Avatar.css';
 import PropTypes from 'prop-types';
 
-class Avatar extends Component {
-    renderAvatar (size) {
+function Avatar (props) {
+    function renderAvatar (size) {
         return (<img
             className={style.avatar}
             style={{
                 width: size,
                 height: size,
-                backgroundSize: size + ' ' + size
+                backgroundSize: `${size}  ${size}`
             }}
         />);
     }
-
-    render () {
-        return (
-            <div>
-                {this.renderAvatar(this.props.size)}
-            </div>
-        );
-    }
+    return (
+        <div>
+            {renderAvatar(props.size)}
+        </div>
+    );
 }
 
 Avatar.defaultProps = {

@@ -6,38 +6,37 @@ class Header extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            headerScrollClass: null,
-            logoScrollClass: style.logo
+            scrollY: null
         };
-        this.listenScrollEvent = this.listenScrollEvent.bind(this);
     }
 
     componentDidMount () {
         window.addEventListener('scroll', this.listenScrollEvent);
     }
+
     componentWillUnmount () {
         window.removeEventListener('scroll', this.listenScrollEvent);
     }
 
-    listenScrollEvent () {
-        if (window.scrollY > 100) {
+    listenScrollEvent = () => {
+        if (window.scrollY) {
             this.setState({
-                headerScrollClass: style.headerScrollClass,
-                logoScrollClass: style.logoScroll
+                scrollY: window.scrollY
             });
         }
-        if (window.scrollY < 100) {
-            this.setState({
-                headerScrollClass: '',
-                logoScrollClass: style.logo
-            });
-        }
-    }
+    };
 
     render () {
+        let headerScrollClass;
+        let logoScrollClass;
+        if (this.state.scrollY > 100) {
+            headerScrollClass = style.headerScrollClass;
+            logoScrollClass = style.logoScroll;
+        }
+
         return (
-            <nav className={classNames(style.header, this.state.headerScrollClass)}>
-                <button className={this.state.logoScrollClass}/>
+            <nav className={classNames(style.header, headerScrollClass)}>
+                <button className={classNames(style.logo, logoScrollClass)}/>
                 <input
                     className={style.search}
                     placeholder='Search'

@@ -1,5 +1,15 @@
+import {
+    CHANGE_POPUP,
+    CLOSE_POPUP,
+    ESTABLISH_POSTS,
+    ESTABLISH_TAGGED,
+    ADD_LIKE,
+    REMOVE_LIKE,
+    ADD_COMMENT
+} from '../types/types';
+
 const initialState = {
-    postsType: true, // переменная для определения рендеринга posts или tagged
+    postsShouldRender: true, // переменная для определения рендеринга posts или tagged
     posts: [
         {
             url: './src/ui/components/MainWall/images/Posts/tolkien1.jpg',
@@ -64,52 +74,64 @@ const initialState = {
         profession: 'Writer, poet, philologist, and academic',
         site: 'tolkien.co.uk'
     },
-    renderPopUp: undefined
+    popUpIndex: null
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-    case 'CHANGE_POPUP':
+    case CHANGE_POPUP:
         return {
             ...state,
-            renderPopUp: action.payload
+            popUpIndex: action.payload
         };
-    case 'CLOSE_POPUP':
+    case CLOSE_POPUP:
         return {
             ...state,
-            renderPopUp: undefined
+            popUpIndex: null
         };
-    case 'POSTSTYPE_POSTS':
+    case ESTABLISH_POSTS:
         return {
             ...state,
-            postsType: true
+            postsShouldRender: true
         };
-    case 'POSTSTYPE_TAGGED':
+    case ESTABLISH_TAGGED:
         return {
             ...state,
-            postsType: false
+            postsShouldRender: false
         };
-    case 'ADD_LIKE':
-        if (action.payload[state.renderPopUp].liked) {
+    case ADD_LIKE:
+        if (action.payload[state.popUpIndex].liked) {
             return state;
         }
         const posts = action.payload.map((post, index) => {
-            if (index === state.renderPopUp) {
+            if (index === state.popUpIndex) {
                 const { url, likes, comments } = post;
                 return { url, likes: likes + 1, comments, liked: true };
             } else return post;
         });
-        return state.postsType ? { ...state, posts: posts } : { ...state, tagged: posts };
+        return state.postsShouldRender ? { ...state, posts: posts } : { ...state, tagged: posts };
 
-    case 'ADD_COMMENT':
+    case REMOVE_LIKE:
+        if (!action.payload[state.popUpIndex].liked) {
+            return state;
+        }
+        const postss = action.payload.map((post, index) => {
+            if (index === state.popUpIndex) {
+                const { url, likes, comments } = post;
+                return { url, likes: likes - 1, comments, liked: false };
+            } else return post;
+        });
+        return state.postsShouldRender ? { ...state, posts: postss } : { ...state, tagged: postss };
+
+    case ADD_COMMENT:
         const commentaries = action.payload.map((post, index) => {
-            if (index === state.renderPopUp) {
+            if (index === state.popUpIndex) {
                 const { comments } = post;
                 comments.push(action.comment);
                 return { ...post, comments };
             } else return post;
         });
-        return state.postsType ? { ...state, posts: commentaries } : { ...state, tagged: commentaries };
+        return state.postsShouldRender ? { ...state, posts: commentaries } : { ...state, tagged: commentaries };
 
     default:
         return state;

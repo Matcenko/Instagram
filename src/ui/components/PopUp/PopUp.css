@@ -16,8 +16,25 @@
     background-color: popUpBackground;
     z-index: 1;
 }
-
-.hr{
+.arrowButton{
+    @mixin removeDefaultButton;
+    width: 25px;
+    height: 25px;
+    background-image: url(./images/arrow.png);
+    display: inline-block;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+.transformArrow{
+    transform: rotate(180deg)
+}
+.displayNone{
+    @mixin removeDefaultButton;
+    height: 0;
+    width: 25px;
+}
+.grayHr{
     border: 1px solid hrColor;
     width: 100%;
 }
@@ -77,7 +94,7 @@
     justify-content: space-between;
 }
 
-.commentsField>.ul{
+.commentsField>.commentsUl{
     height: calc(100% - 2px);
     display: flex;
     flex-direction: column;
@@ -96,7 +113,8 @@
     justify-content: space-between;
 }
 
-.leftButtons, .heartButtonRed, .heartButton, .commentButton, .upLoadButton, .saveButton{
+
+.popUpButton{
     width: 50px;
     height: 20px;
     border: 0;

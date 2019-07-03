@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 
 class Posts extends Component {
     render () {
-        const postsOrTagged = this.props.state.postsType ? this.props.state.posts : this.props.state.tagged;
+        const postsOrTagged = this.props.postsShouldRender ? this.props.posts : this.props.tagged;
         const photos = postsOrTagged.map((photo, index) => {
             const middlePostStyle = (index - 1) % 3 === 0 ? '3.5%' : '';
             return (<Photo
-                url={'url(' + photo.url + ')'}
+                url={ `url(${photo.url})`}
                 likes={photo.likes}
                 comments={photo.comments}
                 onClick={() => {
-                    this.props.сhangePopup(index);
+                    this.props.handleChangePopupClick(index);
                 }}
                 key={index}
-                style={middlePostStyle}
+                margin={middlePostStyle}
             />);
         });
         return (
@@ -26,14 +26,13 @@ class Posts extends Component {
         );
     }
 }
-
 export default connect(
     state => ({
-        state: state.postsInfo
+        postsShouldRender: state.postsInfo.postsShouldRender,
+        posts: state.postsInfo.posts,
+        tagged: state.postsInfo.tagged
     }),
     dispatch => ({
-        сhangePopup: (index) => {
-            dispatch({ type: 'CHANGE_POPUP', payload: index });
-        }
+        handleChangePopupClick: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index })
     })
 )(Posts);

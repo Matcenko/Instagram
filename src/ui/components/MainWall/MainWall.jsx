@@ -26,22 +26,22 @@ class MainWall extends Component {
         const footerLinks = this.state.footerLinksInfo.map((obj) => {
             return (<a className={style.footerLinks} key={obj.link} href={obj.link}>{obj.name}</a>);
         });
+        const postsOrTagged = this.props.postsShouldRender ? this.props.posts : this.props.tagged;
 
-        const postsOrTagged = this.props.state.postsType ? this.props.state.posts : this.props.state.tagged;
         return (
             <main className={style.main}>
-                {(this.props.state.renderPopUp !== undefined) && this.renderPopUp(postsOrTagged)}
+                {(this.props.popUpIndex !== null) && this.renderPopUp(postsOrTagged)}
                 <User/>
                 <hr className={style.hr}/>
                 <div className={style.buttons}>
                     <button
-                        className={classNames(style.postsButton, this.props.state.postsType && style.buttonClicked)}
-                        onClick={() => this.props.postsTypePosts()}
+                        className={classNames(style.postsButton, { [style.buttonClicked ]: this.props.postsShouldRender })}
+                        onClick={this.props.handleEstablishPostsClick}
                     >Posts
                     </button>
                     <button
-                        className={classNames(style.taggedButton, !this.props.state.postsType && style.buttonClicked)}
-                        onClick={() => this.props.postsTypeTagged()}
+                        className={classNames(style.taggedButton, !this.props.postsShouldRender && style.buttonClicked)}
+                        onClick={this.props.handleEstablishTaggedClick}
                     >Tagged
                     </button>
                 </div>
@@ -57,12 +57,13 @@ class MainWall extends Component {
 
 export default connect(
     state => ({
-        state: state.postsInfo
+        postsShouldRender: state.postsInfo.postsShouldRender,
+        posts: state.postsInfo.posts,
+        tagged: state.postsInfo.tagged,
+        popUpIndex: state.postsInfo.popUpIndex
     }),
     dispatch => ({
-        сhangePopup: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index }),
-        closePopUp: () => dispatch({ type: 'CLOSE_POPUP' }),
-        postsTypePosts: () => dispatch({ type: 'POSTSTYPE_POSTS' }),
-        postsTypeTagged: () => dispatch({ type: 'POSTSTYPE_TAGGED' })
+        handleEstablishPostsClick: () => dispatch({ type: 'ESTABLISH_POSTS' }),
+        handleEstablishTaggedClick: () => dispatch({ type: 'ESTABLISH_TAGGED' })
     })
 )(MainWall);
