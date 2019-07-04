@@ -1,41 +1,48 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
+import {string, number, array, func} from 'prop-types';
 import style from './Photo.css';
 
-class Photo extends Component {
-    render () {
-        return (
-            <button
-                className={style.photo}
-                style={{
-                    backgroundImage: this.props.url,
-                    marginRight: this.props.margin,
-                    marginLeft: this.props.margin
-                }}
-                onClick={() => {
-                    this.props.onClick();
-                }}
-            >
-                <div className={style.hoverPhoto}>
-                    <div>
-                        <span className={style.likes}>
-                            {this.props.likes}
-                        </span>
-                        <span className={style.comments}>
-                            {this.props.comments.length}
-                        </span>
-                    </div>
-                </div>
-            </button>
-        );
-    }
-}
 
 Photo.propTypes = {
-    url: PropTypes.string,
-    likes: PropTypes.number,
-    comments: PropTypes.array,
-    onClick: PropTypes.func,
-    margin: PropTypes.string
+    url: string,
+    likes: number,
+    comments: array,
+    onClick: func,
+    margin: string
 };
+
+function Photo(props) {
+    const {
+        url,
+        likes,
+        comments,
+        onClick,
+        margin
+    } = props;
+    return (
+        <button
+            className={style.photo}
+            style={{
+                backgroundImage: url || '',
+                marginRight: margin || '',
+                marginLeft: margin || ''
+            }}
+            onClick={() => {
+                onClick();
+            }}
+        >
+            <div className={style.hoverPhoto}>
+                <div>
+                    <span className={style.likes}>
+                        {likes || 0}
+                    </span>
+                    <span className={style.comments}>
+                        {comments.length || 0}
+                    </span>
+                </div>
+            </div>
+        </button>
+    );
+}
+
 export default Photo;

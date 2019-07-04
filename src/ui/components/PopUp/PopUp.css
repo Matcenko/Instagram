@@ -25,6 +25,7 @@
     background-size: 25px 25px;
     background-repeat: no-repeat;
     text-align: center;
+    cursor: pointer;
 }
 .transformArrow{
     transform: rotate(180deg)

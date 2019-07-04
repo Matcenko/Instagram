@@ -1,36 +1,55 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Avatar from '../Avatar/Avatar.jsx';
+import React, {Component} from 'react';
+import {string} from 'prop-types';
+import {connect} from 'react-redux';
 import classNames from 'classnames';
 import style from './User.css';
+import Avatar from '../Avatar/Avatar.jsx';
 
 class User extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            follow: false,
-            posts: 10,
-            followers: 9,
-            following: 10
-        };
-    }
+    static defaultProps = {
+        nick: '',
+        fullName: '',
+        profession: '',
+        site: ''
+    };
 
-    handleToFollowClock = () => {
+    static propTypes = {
+        nick: string,
+        fullName: string,
+        profession: string,
+        site: string
+    };
+
+    state = {
+        follow: false,
+        posts: 10,
+        followers: 9,
+        following: 10
+    };
+
+    handleToFollowClick = () => {
         this.setState({
             followers: this.state.follow ? this.state.followers - 1 : this.state.followers + 1,
             follow: !this.state.follow
         });
-    }
-    render () {
+    };
+
+    render() {
+        const {
+            nick,
+            fullName,
+            profession,
+            site
+        } = this.props;
         return (
             <header className={style.user}>
                 <Avatar/>
                 <div className={style.userInformation}>
                     <div className={style.nameAndFollow}>
-                        <span className={style.nickName}> {this.props.userInformation.nick}</span>
+                        <span className={style.nickName}> {nick}</span>
                         <button
-                            className={ classNames(style.followButton, !this.state.follow && style.followingButton)}
-                            onClick={this.handleToFollowClock}
+                            className={classNames(style.followButton, !this.state.follow && style.followingButton)}
+                            onClick={this.handleToFollowClick}
                         >{this.state.follow ? 'Following' : 'Follow'}
                         </button>
                     </div>
@@ -40,9 +59,10 @@ class User extends Component {
                         <span className={style.followersInfo}><span className={style.bold}>{this.state.following}</span> following </span>
                     </div>
                     <div className={style.nameWorkWeb}>
-                        <span>{this.props.userInformation.fullName}</span>
-                        <span>{this.props.userInformation.profession} </span>
-                        <a className={style.bold} href={`https:\/\/${this.props.userInformation.site}`}>{this.props.userInformation.site}</a>
+                        <span>{fullName}</span>
+                        <span>{profession} </span>
+                        <a className={style.bold}
+                           href={`https:\/\/${site}`}>{site}</a>
                     </div>
                 </div>
             </header>
@@ -50,9 +70,11 @@ class User extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        userInformation: state.postsInfo.userInformation
-    }),
-    dispatch => ({})
-)(User);
+const mapStateToProps = state => ({
+    nick: state.postsInfo.userInformation.nick,
+    fullName: state.postsInfo.userInformation.fullName,
+    profession: state.postsInfo.userInformation.profession,
+    site: state.postsInfo.userInformation.site
+});
+
+export default connect(mapStateToProps)(User);

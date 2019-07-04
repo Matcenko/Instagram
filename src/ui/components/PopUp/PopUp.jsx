@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
+import {bool, array, string, object, number, oneOfType} from 'prop-types';
+import {connect} from 'react-redux';
 import classNames from 'classnames';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
-import {connect} from 'react-redux';
 
 class PopUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            comment: ''
-        };
-    }
+    static defaultProps = {
+        postsShouldRender: true,
+        posts: [],
+        tagged: [],
+        userNick: '',
+        popUpIndex: null
+    };
+
+    static propTypes = {
+        postsShouldRender: bool,
+        posts: array,
+        tagged: array,
+        userNick: string,
+        popUpIndex: oneOfType([object, number]) // потому что null объект
+    };
+
+    state = {
+        comment: ''
+    };
 
     componentDidMount() {
         this.changePopUpByKeyword();
@@ -37,11 +51,13 @@ class PopUp extends Component {
             }
         });
     };
-    handleInputChange(e) {
+
+    handleInputChange = (e) => {
         if (e.target.value.length < 100) {
-            this.setState({ comment: e.target.value });
+            this.setState({comment: e.target.value});
         }
     }
+
     handleClearInputClick = () => {
         this.setState({comment: ''});
     };
@@ -66,37 +82,49 @@ class PopUp extends Component {
     };
 
     render() {
-        const postsOrTagged = this.props.postsShouldRender ? this.props.posts : this.props.tagged;
-        const popUpInfo = postsOrTagged[this.props.popUpIndex];
+        const {
+            postsShouldRender,
+            posts,
+            tagged,
+            userNick,
+            popUpIndex,
+            handleClosePopUpClick,
+            handleAddLikeClick,
+            handleAddCommentClick
+        } = this.props;
+
+        const postsOrTagged = postsShouldRender ? posts : tagged;
+        const popUpInfo = postsOrTagged[popUpIndex];
         const comments = popUpInfo.comments.map((comment, index) => {
             return (<li key={comment + index}> {comment} </li>);
         });
-        const likeClass = popUpInfo.likeClass ? style.heartButtonRed : style.heartButton;
-        const leftButtonClass = this.props.popUpIndex === 0 ? style.displayNone : style.arrowButton;
-        const rightButtonClass = this.props.popUpIndex >= postsOrTagged.length - 1 ? style.displayNone : style.arrowButton;
+        const likeClass = popUpInfo.liked ? style.heartButtonRed : style.heartButton;
+        const leftButtonClass = popUpIndex === 0 ? style.displayNone : style.arrowButton;
+        const rightButtonClass = popUpIndex >= postsOrTagged.length - 1 ? style.displayNone : style.arrowButton;
+
         return (
             <div
                 className={style.popUp}
-                onClick={this.props.handleClosePopUpClick}
+                onClick={handleClosePopUpClick}
             >
                 <button
                     className={classNames(leftButtonClass, style.transformArrow)}
-                    onClick={(e) => this.handleLeftArrowClick(e)}
+                    onClick={this.handleLeftArrowClick}
                 />
                 <img
                     className={style.photo}
                     src={popUpInfo.url}
-                    onDoubleClick={() => this.props.handleAddLikeClick(postsOrTagged)}
-                    onClick={(e) => this.handleStopPropagationClick(e)}
+                    onDoubleClick={() => handleAddLikeClick(postsOrTagged)}
+                    onClick={this.handleStopPropagationClick}
                 />
                 <div
                     className={style.photoInformation}
-                    onClick={(e) => this.handleStopPropagationClick(e)}
+                    onClick={this.handleStopPropagationClick}
                 >
                     <header className={style.header}>
                         <div className={style.user}>
                             <Avatar size="50px"/>
-                            <span className={style.name}>{this.props.userInformation.nick}</span>
+                            <span className={style.name}>{userNick}</span>
                             <span> &bull;</span>
                             <button className={style.follow}>Follow</button>
                         </div>
@@ -127,14 +155,14 @@ class PopUp extends Component {
                         <input
                             className={style.addComment}
                             value={this.state.comment}
-                            onChange={(e) => this.handleInputChange(e)}
+                            onChange={this.handleInputChange}
                             ref='input'
                             type='text'
                             placeholder='Add a comment...'/>
                         <button
                             className={style.post}
                             onClick={() => {
-                                this.props.handleAddCommentClick(postsOrTagged, this.state.comment);
+                                handleAddCommentClick(postsOrTagged, this.state.comment);
                                 this.handleClearInputClick();
                             }}
                         >Post
@@ -150,21 +178,22 @@ class PopUp extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        postsShouldRender: state.postsInfo.postsShouldRender,
-        posts: state.postsInfo.posts,
-        tagged: state.postsInfo.tagged,
-        userInformation: state.postsInfo.userInformation,
-        popUpIndex: state.postsInfo.popUpIndex
-    }),
-    dispatch => ({
-        handleChangePopupClick: (index) => dispatch({type: 'CHANGE_POPUP', payload: index}),
-        handleClosePopUpClick: () => dispatch({type: 'CLOSE_POPUP'}),
-        handleAddLikeClick: (postsOrTagged) => dispatch({type: 'ADD_LIKE', payload: postsOrTagged}),
-        handleRemoveLikeClick: (postsOrTagged) => dispatch({type: 'REMOVE_LIKE', payload: postsOrTagged}),
-        handleAddCommentClick: (postsOrTagged, comment) => {
-            dispatch({type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment})
-        }
-    })
-)(PopUp);
+const mapStateToProps = state => ({
+    postsShouldRender: state.postsInfo.postsShouldRender,
+    posts: state.postsInfo.posts,
+    tagged: state.postsInfo.tagged,
+    userNick: state.postsInfo.userInformation.nick,
+    popUpIndex: state.postsInfo.popUpIndex
+});
+
+const mapDispatchToProps = dispatch => ({
+    handleChangePopupClick: (index) => dispatch({type: 'CHANGE_POPUP', payload: index}),
+    handleClosePopUpClick: () => dispatch({type: 'CLOSE_POPUP'}),
+    handleAddLikeClick: (postsOrTagged) => dispatch({type: 'ADD_LIKE', payload: postsOrTagged}),
+    handleRemoveLikeClick: (postsOrTagged) => dispatch({type: 'REMOVE_LIKE', payload: postsOrTagged}),
+    handleAddCommentClick: (postsOrTagged, comment) => {
+        dispatch({type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment})
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopUp);

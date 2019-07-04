@@ -14,6 +14,7 @@
     top: 0;
     border-bottom: 1px solid hrColor;
     background-color: white;
+    transition: 0.75s height cubic-bezier(0, 0, 0, 1);
 }
 
 .headerScrollClass{
@@ -30,6 +31,9 @@
     height: 78px;
     background-image: url("./images/instagramLogo.png");
     background-color: myWhite;
+    transition:
+            0.75s height cubic-bezier(0, 0, 0, 1),
+            0.75s background-image -1s cubic-bezier(0, 0, 0, 1);
 }
 
 .logoScroll{
@@ -51,6 +55,7 @@
 
 .search:focus{
     text-align: left;
+    background-color: myWhite;
 }
 
 .logInButton, .singUpButton{
