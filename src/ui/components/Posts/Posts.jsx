@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {bool, array} from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { bool, array } from 'prop-types';
+import { connect } from 'react-redux';
 import style from './Posts.css';
 import Photo from '../Photo/Photo';
 
@@ -17,7 +17,7 @@ class Posts extends Component {
         tagged: array
     };
 
-    render() {
+    render () {
         const {
             postsShouldRender,
             posts,
@@ -27,7 +27,7 @@ class Posts extends Component {
 
         const postsOrTagged = postsShouldRender ? posts : tagged;
         const photos = postsOrTagged.map((photo, index) => {
-            const middlePostStyle = (index - 1) % 3 === 0 ? '3.5%' : '';
+            const middlePostStyle = (index - 1) % 3 === 0;
             return (<Photo
                 url={`url(${photo.url})`}
                 likes={photo.likes}
@@ -36,7 +36,7 @@ class Posts extends Component {
                     handleChangePopupClick(index);
                 }}
                 key={index}
-                margin={middlePostStyle}
+                middlePostStyle={middlePostStyle}
             />);
         });
         return (
@@ -47,7 +47,6 @@ class Posts extends Component {
     }
 }
 
-
 const mapStateToProps = state => ({
     postsShouldRender: state.postsInfo.postsShouldRender,
     posts: state.postsInfo.posts,
@@ -55,6 +54,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChangePopupClick: (index) => dispatch({type: 'CHANGE_POPUP', payload: index})
+    handleChangePopupClick: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index })
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

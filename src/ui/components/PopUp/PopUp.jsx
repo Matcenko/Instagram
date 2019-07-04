@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {bool, array, string, object, number, oneOfType} from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { bool, array, string, object, number, oneOfType } from 'prop-types';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
@@ -26,12 +26,12 @@ class PopUp extends Component {
         comment: ''
     };
 
-    componentDidMount() {
+    componentDidMount () {
         this.changePopUpByKeyword();
         document.body.style.overflow = 'hidden';
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         document.body.style.overflow = 'auto';
     }
 
@@ -54,12 +54,12 @@ class PopUp extends Component {
 
     handleInputChange = (e) => {
         if (e.target.value.length < 100) {
-            this.setState({comment: e.target.value});
+            this.setState({ comment: e.target.value });
         }
-    }
+    };
 
     handleClearInputClick = () => {
-        this.setState({comment: ''});
+        this.setState({ comment: '' });
     };
     handleStopPropagationClick = (e) => {
         e.stopPropagation();
@@ -81,7 +81,7 @@ class PopUp extends Component {
         }
     };
 
-    render() {
+    render () {
         const {
             postsShouldRender,
             posts,
@@ -187,12 +187,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChangePopupClick: (index) => dispatch({type: 'CHANGE_POPUP', payload: index}),
-    handleClosePopUpClick: () => dispatch({type: 'CLOSE_POPUP'}),
-    handleAddLikeClick: (postsOrTagged) => dispatch({type: 'ADD_LIKE', payload: postsOrTagged}),
-    handleRemoveLikeClick: (postsOrTagged) => dispatch({type: 'REMOVE_LIKE', payload: postsOrTagged}),
+    handleChangePopupClick: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index }),
+    handleClosePopUpClick: () => dispatch({ type: 'CLOSE_POPUP' }),
+    handleAddLikeClick: (postsOrTagged) => dispatch({ type: 'ADD_LIKE', payload: postsOrTagged }),
+    handleRemoveLikeClick: (postsOrTagged) => dispatch({ type: 'REMOVE_LIKE', payload: postsOrTagged }),
     handleAddCommentClick: (postsOrTagged, comment) => {
-        dispatch({type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment})
+        dispatch({ type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment });
     }
 });
 

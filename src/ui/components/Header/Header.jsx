@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './Header.css';
 
@@ -7,11 +7,11 @@ export default class Header extends Component {
         scrollY: null
     };
 
-    componentDidMount() {
+    componentDidMount () {
         window.addEventListener('scroll', this.listenScrollEvent);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         window.removeEventListener('scroll', this.listenScrollEvent);
     }
 
@@ -23,7 +23,7 @@ export default class Header extends Component {
         }
     };
 
-    render() {
+    render () {
         let headerScrollClass;
         let logoScrollClass;
         if (this.state.scrollY > 100) {

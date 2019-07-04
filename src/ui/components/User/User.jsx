@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {string} from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { string } from 'prop-types';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './User.css';
 import Avatar from '../Avatar/Avatar.jsx';
@@ -34,7 +34,7 @@ class User extends Component {
         });
     };
 
-    render() {
+    render () {
         const {
             nick,
             fullName,
@@ -62,7 +62,7 @@ class User extends Component {
                         <span>{fullName}</span>
                         <span>{profession} </span>
                         <a className={style.bold}
-                           href={`https:\/\/${site}`}>{site}</a>
+                            href={`https:\/\/${site}`}>{site}</a>
                     </div>
                 </div>
             </header>

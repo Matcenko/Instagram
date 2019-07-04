@@ -5,6 +5,7 @@
 .main{
     min-height: 100vh;
     max-height: 100%;
+    min-width: 100%;
     padding: 71px 120px 0 120px;
     background-color: bodyColor;
 }
@@ -59,4 +60,39 @@
     text-decoration: none;
     color: linkColor;
 }
+
+/*@media screen and (--media-desktop-xl){*/
+
+/*}*/
+/*@media screen and (--media-desktop-l){*/
+
+/*}*/
+/*@media screen and (--media-desktop-m){*/
+
+/*}*/
+/*@media screen and (--media-desktop-s){*/
+
+/*}*/
+@media screen and (--media-desktop){
+    .photo{
+        padding: 71px 120px 0 120px;
+    }
+}
+@media screen and (--media-tablet-l){
+    .main{
+        padding: 71px 90px 0 90px;
+    }
+    .footerLinks{
+        font-size: 12px;
+    }
+}
+@media screen and (--media-tablet-s){
+    .main{
+        padding: 71px 0 0 0;
+    }
+    .footerLinks{
+        font-size: 8px;
+    }
+}
+
 

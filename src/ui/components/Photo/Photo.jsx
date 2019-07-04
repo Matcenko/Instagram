@@ -1,31 +1,30 @@
 import React from 'react';
-import {string, number, array, func} from 'prop-types';
+import classNames from 'classnames';
+import { string, number, array, func, bool } from 'prop-types';
 import style from './Photo.css';
-
 
 Photo.propTypes = {
     url: string,
     likes: number,
     comments: array,
     onClick: func,
-    margin: string
+    middlePostStyle: bool
 };
 
-function Photo(props) {
+function Photo (props) {
     const {
         url,
         likes,
         comments,
         onClick,
-        margin
+        middlePostStyle
     } = props;
+    const middlePost = middlePostStyle && style.middlePostStyle;
     return (
         <button
-            className={style.photo}
+            className={classNames(style.photo, middlePost)}
             style={{
-                backgroundImage: url || '',
-                marginRight: margin || '',
-                marginLeft: margin || ''
+                backgroundImage: url || ''
             }}
             onClick={() => {
                 onClick();

@@ -1,8 +1,20 @@
 @value myGrey from '../../../css/colors.css';
 
 .avatar{
+    width: 150px;
+    height: 150px;
     border-radius: 100%;
     background-color: myGrey;
     background-image: url(./images/tolkienAvatar.jpg);
+    background-size: 150px 150px;
     background-repeat: no-repeat;
+}
+
+@media screen and (--media-tablet-s){
+    .avatar{
+        width: 100px;
+        height: 100px;
+        background-size: 100px 100px;
+
+    }
 }

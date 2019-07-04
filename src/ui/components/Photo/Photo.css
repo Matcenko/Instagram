@@ -4,12 +4,15 @@
 .photo{
     @mixin removeDefaultButton;
     width: 31%;
-    height: 300px;
+    height: 320px;
     margin-bottom: 3%;
     padding: 0;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
+}
+.middlePostStyle{
+    margin: 0 3.5% 0 3.5%;
 }
 
 .hoverPhoto{
@@ -41,4 +44,56 @@
 
 .hoverPhoto:hover{
     opacity: 1;
+}
+
+/*@media screen and (--media-desktop-xl){*/
+/*    .photo{*/
+/*        height: 450px;*/
+/*    }*/
+/*}*/
+/*@media screen and (--media-desktop-l){*/
+/*    .photo{*/
+/*        height: 430px;*/
+/*    }*/
+/*}*/
+/*@media screen and (--media-desktop-m){*/
+/*    .photo{*/
+/*        height: 410px;*/
+/*    }*/
+/*}*/
+/*@media screen and (--media-desktop-s){*/
+/*    .photo{*/
+/*        height: 390px;*/
+/*    }*/
+/*}*/
+@media screen and (--media-desktop){
+    .photo{
+        height: 370px;
+    }
+}
+@media screen and (--media-tablet-l){
+    .photo{
+        height: 310px;
+    }
+}
+@media screen and (--media-tablet-s){
+    .photo{
+        width: 33%;
+        height: 250px;
+        margin-bottom: 2px;
+    }
+    .middlePostStyle{
+        margin: 0 2px 0 2px;
+    }
+}
+@media screen and (--media-phone){
+    .photo{
+        height: 200px;
+        width: calc(31% - 0.01px);
+    }
+}
+@media screen and (media-phone-s){
+    .photo{
+        height: 150px;
+    }
 }

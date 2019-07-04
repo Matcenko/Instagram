@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import style from './Avatar.css';
-
-Avatar.defaultProps = {
-    size: '150px'
-};
 
 Avatar.propTypes = {
     size: PropTypes.string
 };
+// не использую дефолтпропс, потому что дефолтные значения прописаны в классе avatar
 
 export default function Avatar (props) {
     function renderAvatar (size) {
         return (<img
-            className={style.avatar}
+            className={classNames(style.avatar)}
             style={{
                 width: size,
                 height: size,
