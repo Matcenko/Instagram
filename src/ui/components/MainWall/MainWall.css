@@ -8,6 +8,15 @@
     min-width: 100%;
     padding: 71px 120px 0 120px;
     background-color: bodyColor;
+    @media  (--media-desktop){
+        padding: 71px 120px 0 120px;
+    }
+    @media (--media-tablet-l){
+        padding: 71px 90px 0 90px;
+    }
+    @media (--media-tablet-s){
+        padding: 71px 0 0 0;
+    }
 }
 
 .hr{
@@ -34,6 +43,7 @@
     background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }
+
 .postsButton::before{
     @mixin addIconBefore;
     background-image: url(./images/posts.png);
@@ -43,9 +53,11 @@
     @mixin addIconBefore;
     background-image: url(./images/tagged.png);
 }
+
 .buttonClicked{
     border-top: 1px solid black;
 }
+
 .footer{
     margin-top: 8px;
     margin-bottom: 18px;
@@ -59,40 +71,14 @@
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
     color: linkColor;
-}
-
-/*@media screen and (--media-desktop-xl){*/
-
-/*}*/
-/*@media screen and (--media-desktop-l){*/
-
-/*}*/
-/*@media screen and (--media-desktop-m){*/
-
-/*}*/
-/*@media screen and (--media-desktop-s){*/
-
-/*}*/
-@media screen and (--media-desktop){
-    .photo{
-        padding: 71px 120px 0 120px;
-    }
-}
-@media screen and (--media-tablet-l){
-    .main{
-        padding: 71px 90px 0 90px;
-    }
-    .footerLinks{
+    @media (--media-tablet-l){
         font-size: 12px;
     }
-}
-@media screen and (--media-tablet-s){
-    .main{
-        padding: 71px 0 0 0;
-    }
-    .footerLinks{
+    @media (--media-tablet-s){
         font-size: 8px;
     }
 }
+
+
 
 

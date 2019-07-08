@@ -20,6 +20,7 @@ export default class Header extends Component {
             this.setState({
                 scrollY: window.scrollY
             });
+            this.isScrolled = window.scrollY;
         }
     };
 

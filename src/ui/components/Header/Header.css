@@ -15,6 +15,9 @@
     border-bottom: 1px solid hrColor;
     background-color: myWhite;
     transition: 0.75s height cubic-bezier(0, 0, 0, 1);
+    @media (--media-tablet-s){
+        justify-content: space-between;
+    }
 }
 
 .headerScrollClass{
@@ -70,6 +73,9 @@
     border-radius: 4px;
     background-color: blueButton;
     color: white;
+    @media (--media-tablet-s){
+        padding: 3px 6px;
+    }
 }
 
 .singUpButton{
@@ -77,12 +83,5 @@
     color: blueButton;
 }
 
-@media screen and (--media-tablet-s){
-    .logInButton, .singUpButton{
-        padding: 3px 6px;
-    }
-    .header {
-        justify-content: space-between;
-    }
-}
+
 

@@ -8,13 +8,12 @@
     background-image: url(./images/tolkienAvatar.jpg);
     background-size: 150px 150px;
     background-repeat: no-repeat;
-}
-
-@media screen and (--media-tablet-s){
-    .avatar{
+    @media (--media-tablet-s){
         width: 100px;
         height: 100px;
         background-size: 100px 100px;
 
     }
 }
+
+
