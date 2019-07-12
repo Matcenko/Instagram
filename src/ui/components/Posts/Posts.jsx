@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, array } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './Posts.css';
 import Photo from '../Photo/Photo';
@@ -12,9 +12,9 @@ class Posts extends Component {
     };
 
     static propTypes = {
-        postsShouldRender: bool,
-        posts: array,
-        tagged: array
+        postsShouldRender: PropTypes.bool,
+        posts: PropTypes.array,
+        tagged: PropTypes.array
     };
 
     render () {
@@ -27,7 +27,7 @@ class Posts extends Component {
 
         const postsOrTagged = postsShouldRender ? posts : tagged;
         const photos = postsOrTagged.map((photo, index) => {
-            const middlePostStyle = (index - 1) % 3 === 0;
+            const isMiddle = (index - 1) % 3 === 0;
             return (<Photo
                 url={`url(${photo.url})`}
                 likes={photo.likes}
@@ -36,7 +36,7 @@ class Posts extends Component {
                     handleChangePopupClick(index);
                 }}
                 key={index}
-                middlePostStyle={middlePostStyle}
+                isMiddle={isMiddle}
             />);
         });
         return (
@@ -47,10 +47,10 @@ class Posts extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    postsShouldRender: state.postsInfo.postsShouldRender,
-    posts: state.postsInfo.posts,
-    tagged: state.postsInfo.tagged
+const mapStateToProps = ({ postsInfo }) => ({
+    postsShouldRender: postsInfo.postsShouldRender,
+    posts: postsInfo.posts,
+    tagged: postsInfo.tagged
 });
 
 const mapDispatchToProps = dispatch => ({

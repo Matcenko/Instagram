@@ -4,32 +4,34 @@
 .photo{
     @mixin removeDefaultButton;
     width: 31%;
-    height: 320px;
+    height: 300px;
     margin-bottom: 3%;
     padding: 0;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
-    @media (--media-desktop){
-        height: 370px;
+
+
+    @media (media-phone-s){
+        height: 150px;
     }
-    @media (--media-tablet-l){
-        height: 310px;
+    @media (--media-phone){
+        height: 200px;
+        width: calc(31% - 0.01px);
     }
     @media (--media-tablet-s){
         width: 33%;
         height: 250px;
         margin-bottom: 2px;
     }
-    @media (--media-phone){
-        height: 200px;
-        width: calc(31% - 0.01px);
+    @media (--media-tablet-l){
+        height: 250px;
     }
-    @media (media-phone-s){
-        height: 150px;
+    @media (--media-desktop-s) {
+        height: 320px;
     }
 }
-.middlePostStyle{
+.middlePost{
     margin: 0 3.5% 0 3.5%;
     @media (--media-tablet-s){
         margin: 0 2px 0 2px;

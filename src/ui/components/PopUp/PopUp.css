@@ -16,16 +16,30 @@
     background-color: popUpBackground;
     z-index: 1;
 }
-.arrowButton{
+.popupField{
+    display: flex;
+}
+.arrowButton, .closePopup{
     @mixin removeDefaultButton;
+    display: inline-block;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.arrowButton{
     width: 25px;
     height: 25px;
     background-image: url(./images/arrow.png);
-    display: inline-block;
     background-size: 25px 25px;
-    background-repeat: no-repeat;
-    text-align: center;
-    cursor: pointer;
+}
+.closePopup{
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-image: url(./images/cross.png);
+    background-size: 18px 18px;
+
 }
 .transformArrow{
     transform: rotate(180deg)
@@ -41,20 +55,22 @@
 }
 
 .photo{
-    width: 25vw;
-    height: 50vh;
+    min-width: 20vw;
+    min-height: 40vh;
+    max-width: 40vw;
+    max-height: 75vh;
 }
 
 .photoInformation {
-    width: 22vw;
-    height: 50vh;
+    min-width: 300px;
+    max-width: 300px;
+    height: inherit;
     background-color: bodyColor;
-    display: grid;
-    grid-template-rows: 8vh 26vh 10vh 5vh;
     font-family: 'Roboto', sans-serif;
 }
 
 .header{
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,6 +106,7 @@
 }
 
 .commentsField{
+    height: calc(100% - 140px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -104,6 +121,7 @@
 }
 
 .navigation{
+    height: 50px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -113,7 +131,6 @@
     display: flex;
     justify-content: space-between;
 }
-
 
 .popUpButton{
     width: 50px;
@@ -153,6 +170,8 @@
 }
 
 .comment{
+    height: 30px;
+    padding-right: 5px;
     display: flex;
     justify-content: space-between;
 }
@@ -161,6 +180,7 @@
     @mixin removeDefaultButton;
     width: 10%;
     margin-right: 5px;
+    font-size: 11.5px;
     color: blueButton;
     background-color: bodyColor;
     cursor: pointer;
@@ -168,7 +188,7 @@
 
 .addComment{
     width: 90%;
-    padding: 5px;
+    padding: 5px 10px 15px 10px;
     outline: none;
     border: 0;
     background-color: bodyColor;

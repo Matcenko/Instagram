@@ -4,19 +4,27 @@
 
 .main{
     min-height: 100vh;
-    max-height: 100%;
-    min-width: 100%;
-    padding: 71px 120px 0 120px;
+    padding: 71px 175px 0 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: bodyColor;
-    @media  (--media-desktop){
-        padding: 71px 120px 0 120px;
+    @media  (--media-tablet-l){ /*от 768 до 1024*/
+        padding: 71px 40px 0 40px;
     }
-    @media (--media-tablet-l){
+    @media  (--media-tablet-s){ /*до 768*/
+        padding: 71px 15px 0 15px;
+    }
+    @media  (--media-desktop-s){ /*от 1024 до 1360*/
         padding: 71px 90px 0 90px;
     }
-    @media (--media-tablet-s){
-        padding: 71px 0 0 0;
+    @media  (--media-desktop-m){ /*от 1360 до 1600*/
+        padding: 71px 220px 0 220px;
     }
+    @media  (--media-desktop-l){ /*от 1600 до 1716*/
+        padding: 71px 375px 0 375px;
+    }
+
 }
 
 .hr{
@@ -59,8 +67,7 @@
 }
 
 .footer{
-    margin-top: 8px;
-    margin-bottom: 18px;
+    padding-bottom: 12px;
     display: flex;
     flex-wrap: wrap;
 }

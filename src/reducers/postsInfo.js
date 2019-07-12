@@ -3,9 +3,7 @@ import {
     CLOSE_POPUP,
     ESTABLISH_POSTS,
     ESTABLISH_TAGGED,
-    ADD_LIKE,
-    REMOVE_LIKE,
-    ADD_COMMENT
+    CHANGE_POST_INFO
 } from '../types/types';
 
 const initialState = {
@@ -69,7 +67,7 @@ const initialState = {
         }
     ],
     userInformation: {
-        nick: 'JRRT',
+        nick: 'JohnTolkien',
         fullName: 'John Ronald Reuel Tolkien',
         profession: 'Writer, poet, philologist, and academic',
         site: 'tolkien.co.uk'
@@ -99,40 +97,8 @@ export default function (state = initialState, action) {
             ...state,
             postsShouldRender: false
         };
-    case ADD_LIKE:
-        if (action.payload[state.popUpIndex].liked) {
-            return state;
-        }
-        const posts = action.payload.map((post, index) => {
-            if (index === state.popUpIndex) {
-                const { url, likes, comments } = post;
-                return { url, likes: likes + 1, comments, liked: true };
-            } else return post;
-        });
-        return state.postsShouldRender ? { ...state, posts: posts } : { ...state, tagged: posts };
-
-    case REMOVE_LIKE:
-        if (!action.payload[state.popUpIndex].liked) {
-            return state;
-        }
-        const postss = action.payload.map((post, index) => {
-            if (index === state.popUpIndex) {
-                const { url, likes, comments } = post;
-                return { url, likes: likes - 1, comments, liked: false };
-            } else return post;
-        });
-        return state.postsShouldRender ? { ...state, posts: postss } : { ...state, tagged: postss };
-
-    case ADD_COMMENT:
-        const commentaries = action.payload.map((post, index) => {
-            if (index === state.popUpIndex) {
-                const { comments } = post;
-                comments.push(action.comment);
-                return { ...post, comments };
-            } else return post;
-        });
-        return state.postsShouldRender ? { ...state, posts: commentaries } : { ...state, tagged: commentaries };
-
+    case CHANGE_POST_INFO:
+        return state.postsShouldRender ? { ...state, posts: action.payload } : { ...state, tagged: action.payload };
     default:
         return state;
     }

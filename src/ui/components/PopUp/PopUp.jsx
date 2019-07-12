@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
-import { bool, array, string, object, number, oneOfType } from 'prop-types';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import changePopup from '../../../actions/changePopup';
+import closePopup from '../../../actions/closePopup';
+import changePostInfo from '../../../actions/changePostInfo';
+import {connect} from 'react-redux';
 import classNames from 'classnames';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
+
+const ESC_KEY_CODE = 27;
+const LEFT_ARROW_KEY_CODE = 37;
+const RIGHT_ARROW_KEY_CODE = 39;
 
 class PopUp extends Component {
     static defaultProps = {
@@ -15,58 +22,84 @@ class PopUp extends Component {
     };
 
     static propTypes = {
-        postsShouldRender: bool,
-        posts: array,
-        tagged: array,
-        userNick: string,
-        popUpIndex: oneOfType([object, number]) // потому что null объект
+        postsShouldRender: PropTypes.bool,
+        posts: PropTypes.array,
+        tagged: PropTypes.array,
+        userNick: PropTypes.string,
+        popUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]) // потому что null объект
     };
 
     state = {
         comment: ''
     };
 
-    componentDidMount () {
+    componentDidMount() {
         this.changePopUpByKeyword();
         document.body.style.overflow = 'hidden';
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         document.body.style.overflow = 'auto';
+        window.removeEventListener('keydown', this.ecsListener);
+        window.removeEventListener('keyup', this.arrowListener);
     }
 
     changePopUpByKeyword = () => {
-        const postsOrTagged = this.props.postsShouldRender ? this.props.posts : this.props.tagged;
-        window.addEventListener('keydown', (e) => {
-            if (e.keyCode === 27) {
-                e.preventDefault();
-                this.props.handleClosePopUpClick();
-            }
-        });
-        window.addEventListener('keyup', (e) => {
-            if ((e.keyCode === 37) && (this.props.popUpIndex > 0)) {
-                this.props.handleChangePopupClick(this.props.popUpIndex - 1);
-            } else if ((e.keyCode === 39) && (this.props.popUpIndex < postsOrTagged.length - 1)) {
-                this.props.handleChangePopupClick(this.props.popUpIndex + 1);
-            }
-        });
+        window.addEventListener('keydown', this.ecsListener);
+        window.addEventListener('keyup', this.arrowListener);
     };
-
-    handleInputChange = (e) => {
-        if (e.target.value.length < 100) {
-            this.setState({ comment: e.target.value });
+    ecsListener = (e) => {
+        if (e.keyCode === ESC_KEY_CODE) {
+            e.preventDefault();
+            this.props.handleClosePopUpClick();
         }
     };
-
+    arrowListener = (e) => {
+        const postsOrTagged = this.props.postsShouldRender ? this.props.posts : this.props.tagged;
+        if ((e.keyCode === LEFT_ARROW_KEY_CODE) && (this.props.popUpIndex > 0)) {
+            this.props.handleChangePopupClick(this.props.popUpIndex - 1);
+        } else if ((e.keyCode === RIGHT_ARROW_KEY_CODE) && (this.props.popUpIndex < postsOrTagged.length - 1)) {
+            this.props.handleChangePopupClick(this.props.popUpIndex + 1);
+        }
+    };
+    handleChangeLikeClick = (postsOrTagged, like) => {
+        if (((postsOrTagged[this.props.popUpIndex].liked) && (like)) ||
+            ((!postsOrTagged[this.props.popUpIndex].liked) && (!like))) {
+            return postsOrTagged;
+        }
+        const changed = postsOrTagged.map((post, index) => {
+            if (index === this.props.popUpIndex) {
+                const {url, likes, comments} = post;
+                const value = like ? 1 : -1;
+                return {url, likes: likes + value, comments, liked: like};
+            } else return post;
+        });
+        this.props.changePostInfo(changed);
+    };
+    handleAddCommentClick = (postsOrTagged) => {
+        const commentaries = postsOrTagged.map((post, index) => {
+            if (index === this.props.popUpIndex) {
+                const {comments} = post;
+                comments.push(this.state.comment);
+                return {...post, comments};
+            } else return post;
+        });
+        this.props.changePostInfo(commentaries);
+    }
+    handleInputChange = (e) => {
+        if (e.target.value.length < 100) {
+            this.setState({comment: e.target.value});
+        }
+    };
     handleClearInputClick = () => {
-        this.setState({ comment: '' });
+        this.setState({comment: ''});
     };
     handleStopPropagationClick = (e) => {
         e.stopPropagation();
     };
     handleAddLikeButtonClick = (postsOrTagged) => {
-        this.props.handleAddLikeClick(postsOrTagged);
-        this.props.handleRemoveLikeClick(postsOrTagged);
+        this.handleChangeLikeClick(postsOrTagged, true);
+        this.handleChangeLikeClick(postsOrTagged, false);
     };
     handleLeftArrowClick = (e) => {
         if (this.props.popUpIndex > 0) {
@@ -74,30 +107,25 @@ class PopUp extends Component {
             this.handleStopPropagationClick(e);
         }
     };
-    handleRightArrowClick = (e, postsOrTagged) => {
+    handleRightArrowClick = postsOrTagged => e => {
         if (this.props.popUpIndex < postsOrTagged.length - 1) {
             this.props.handleChangePopupClick(this.props.popUpIndex + 1);
             this.handleStopPropagationClick(e);
         }
     };
 
-    render () {
+    render() {
         const {
             postsShouldRender,
             posts,
             tagged,
             userNick,
             popUpIndex,
-            handleClosePopUpClick,
-            handleAddLikeClick,
-            handleAddCommentClick
+            handleClosePopUpClick
         } = this.props;
 
         const postsOrTagged = postsShouldRender ? posts : tagged;
         const popUpInfo = postsOrTagged[popUpIndex];
-        const comments = popUpInfo.comments.map((comment, index) => {
-            return (<li key={comment + index}> {comment} </li>);
-        });
         const likeClass = popUpInfo.liked ? style.heartButtonRed : style.heartButton;
         const leftButtonClass = popUpIndex === 0 ? style.displayNone : style.arrowButton;
         const rightButtonClass = popUpIndex >= postsOrTagged.length - 1 ? style.displayNone : style.arrowButton;
@@ -107,93 +135,97 @@ class PopUp extends Component {
                 className={style.popUp}
                 onClick={handleClosePopUpClick}
             >
+                <button className={style.closePopup}/>
                 <button
                     className={classNames(leftButtonClass, style.transformArrow)}
                     onClick={this.handleLeftArrowClick}
                 />
-                <img
-                    className={style.photo}
-                    src={popUpInfo.url}
-                    onDoubleClick={() => handleAddLikeClick(postsOrTagged)}
-                    onClick={this.handleStopPropagationClick}
-                />
-                <div
-                    className={style.photoInformation}
-                    onClick={this.handleStopPropagationClick}
-                >
-                    <header className={style.header}>
-                        <div className={style.user}>
-                            <Avatar size="50px"/>
-                            <span className={style.name}>{userNick}</span>
-                            <span> &bull;</span>
-                            <button className={style.follow}>Follow</button>
-                        </div>
-                        <div className={style.points}/>
-                    </header>
-                    <div className={style.commentsField}>
-                        <hr className={style.grayHr}/>
-                        <ul className={style.commentsUl}>
-                            {comments}
-                        </ul>
-                        <hr className={style.grayHr}/>
-                    </div>
-                    <div className={style.navigation}>
-                        <div className={style.buttons}>
-                            <div className={classNames(style.leftButtons, style.popUpButton)}>
-                                <div
-                                    className={classNames(likeClass, style.popUpButton)}
-                                    onClick={() => this.handleAddLikeButtonClick(postsOrTagged)}/>
-                                <div className={classNames(style.commentButton, style.popUpButton)}/>
-                                <div className={classNames(style.upLoadButton, style.popUpButton)}/>
+                <div className={style.popupField}>
+                    <img
+                        className={style.photo}
+                        src={popUpInfo.url}
+                        onDoubleClick={() => this.handleChangeLikeClick(postsOrTagged, true)}
+                        onClick={this.handleStopPropagationClick}
+                    />
+                    <div
+                        className={style.photoInformation}
+                        onClick={this.handleStopPropagationClick}
+                    >
+                        <header className={style.header}>
+                            <div className={style.user}>
+                                <Avatar size="50px"/>
+                                <span className={style.name}>{userNick}</span>
+                                <span> &bull;</span>
+                                <button className={style.follow}>Follow</button>
                             </div>
-                            <div className={classNames(style.saveButton, style.popUpButton)}/>
+                            <div className={style.points}/>
+                        </header>
+
+                        <div className={style.commentsField}>
+                            <hr className={style.grayHr}/>
+                            <ul className={style.commentsUl}>
+                                {popUpInfo.comments.map((comment, index) => {
+                                    return (<li key={comment + index}> {comment} </li>);
+                                })}
+                            </ul>
+                            <hr className={style.grayHr}/>
                         </div>
-                        <p>{popUpInfo.likes} likes</p>
-                        <hr className={style.grayHr}/>
+                        <div className={style.navigation}>
+                            <div className={style.buttons}>
+                                <div className={classNames(style.leftButtons, style.popUpButton)}>
+                                    <div
+                                        className={classNames(likeClass, style.popUpButton)}
+                                        onClick={() => this.handleAddLikeButtonClick(postsOrTagged)}/>
+                                    <div className={classNames(style.commentButton, style.popUpButton)}/>
+                                    <div className={classNames(style.upLoadButton, style.popUpButton)}/>
+                                </div>
+                                <div className={classNames(style.saveButton, style.popUpButton)}/>
+                            </div>
+                            <p>{popUpInfo.likes} likes</p>
+                            <hr className={style.grayHr}/>
+                        </div>
+                        <div className={style.comment}>
+                            <input
+                                className={style.addComment}
+                                value={this.state.comment}
+                                onChange={this.handleInputChange}
+                                ref='input'
+                                type='text'
+                                placeholder='Add a comment...'/>
+                            <button
+                                className={style.post}
+                                onClick={() => {
+                                    this.handleAddCommentClick(postsOrTagged);
+                                    this.handleClearInputClick();
+                                }}
+                            >Post
+                            </button>
+                        </div>
                     </div>
-                    <div className={style.comment}>
-                        <input
-                            className={style.addComment}
-                            value={this.state.comment}
-                            onChange={this.handleInputChange}
-                            ref='input'
-                            type='text'
-                            placeholder='Add a comment...'/>
-                        <button
-                            className={style.post}
-                            onClick={() => {
-                                handleAddCommentClick(postsOrTagged, this.state.comment);
-                                this.handleClearInputClick();
-                            }}
-                        >Post
-                        </button>
-                    </div>
+
+
                 </div>
                 <button
                     className={rightButtonClass}
-                    onClick={(e) => this.handleRightArrowClick(e, postsOrTagged)}
+                    onClick={this.handleRightArrowClick(postsOrTagged)}
                 />
             </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    postsShouldRender: state.postsInfo.postsShouldRender,
-    posts: state.postsInfo.posts,
-    tagged: state.postsInfo.tagged,
-    userNick: state.postsInfo.userInformation.nick,
-    popUpIndex: state.postsInfo.popUpIndex
+const mapStateToProps = ({postsInfo}) => ({
+    postsShouldRender: postsInfo.postsShouldRender,
+    posts: postsInfo.posts,
+    tagged: postsInfo.tagged,
+    userNick: postsInfo.userInformation.nick,
+    popUpIndex: postsInfo.popUpIndex
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChangePopupClick: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index }),
-    handleClosePopUpClick: () => dispatch({ type: 'CLOSE_POPUP' }),
-    handleAddLikeClick: (postsOrTagged) => dispatch({ type: 'ADD_LIKE', payload: postsOrTagged }),
-    handleRemoveLikeClick: (postsOrTagged) => dispatch({ type: 'REMOVE_LIKE', payload: postsOrTagged }),
-    handleAddCommentClick: (postsOrTagged, comment) => {
-        dispatch({ type: 'ADD_COMMENT', payload: postsOrTagged, comment: comment });
-    }
+    handleChangePopupClick: (index) => dispatch(changePopup(index)),
+    handleClosePopUpClick: () => dispatch(closePopup()),
+    changePostInfo: (changed) => dispatch(changePostInfo(changed))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PopUp);

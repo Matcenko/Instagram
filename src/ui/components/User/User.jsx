@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './User.css';
@@ -14,15 +14,14 @@ class User extends Component {
     };
 
     static propTypes = {
-        nick: string,
-        fullName: string,
-        profession: string,
-        site: string
+        nick: PropTypes.string,
+        fullName: PropTypes.string,
+        profession: PropTypes.string,
+        site: PropTypes.string
     };
 
     state = {
         follow: false,
-        posts: 10,
         followers: 9,
         following: 10
     };
@@ -39,8 +38,14 @@ class User extends Component {
             nick,
             fullName,
             profession,
-            site
+            site,
+            posts
         } = this.props;
+        const {
+            follow,
+            followers,
+            following
+        } = this.state;
         return (
             <header className={style.user}>
                 <Avatar/>
@@ -48,21 +53,21 @@ class User extends Component {
                     <div className={style.nameAndFollow}>
                         <span className={style.nickName}> {nick}</span>
                         <button
-                            className={classNames(style.followButton, !this.state.follow && style.followingButton)}
+                            className={classNames(style.followButton, {[style.followingButton]: !follow })}
                             onClick={this.handleToFollowClick}
-                        >{this.state.follow ? 'Following' : 'Follow'}
+                        >{follow ? 'Following' : 'Follow'}
                         </button>
                     </div>
                     <div className={style.followers}>
-                        <span className={style.followersInfo}><span className={style.bold}>{this.state.posts}</span> posts </span>
-                        <span className={style.followersInfo}><span className={style.bold}>{this.state.followers}</span> followers </span>
-                        <span className={style.followersInfo}><span className={style.bold}>{this.state.following}</span> following </span>
+                        <span className={style.followersInfo}><span className={style.bold}>{posts}</span> posts </span>
+                        <span className={style.followersInfo}><span className={style.bold}>{followers}</span> followers </span>
+                        <span className={style.followersInfo}><span className={style.bold}>{following}</span> following </span>
                     </div>
                     <div className={style.nameWorkWeb}>
                         <span>{fullName}</span>
                         <span>{profession} </span>
                         <a className={style.bold}
-                            href={`https:\/\/${site}`}>{site}</a>
+                            href={`https://${site}`}>{site}</a>
                     </div>
                 </div>
             </header>
@@ -70,11 +75,12 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    nick: state.postsInfo.userInformation.nick,
-    fullName: state.postsInfo.userInformation.fullName,
-    profession: state.postsInfo.userInformation.profession,
-    site: state.postsInfo.userInformation.site
+const mapStateToProps = ({ postsInfo }) =>  ({
+    nick: postsInfo.userInformation.nick,
+    fullName: postsInfo.userInformation.fullName,
+    profession: postsInfo.userInformation.profession,
+    site: postsInfo.userInformation.site,
+    posts: postsInfo.posts.length
 });
 
 export default connect(mapStateToProps)(User);

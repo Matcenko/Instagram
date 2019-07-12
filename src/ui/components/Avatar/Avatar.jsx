@@ -6,22 +6,19 @@ import style from './Avatar.css';
 Avatar.propTypes = {
     size: PropTypes.string
 };
-// не использую дефолтпропс, потому что дефолтные значения прописаны в классе avatar
 
 export default function Avatar (props) {
-    function renderAvatar (size) {
-        return (<img
-            className={classNames(style.avatar)}
-            style={{
-                width: size,
-                height: size,
-                backgroundSize: `${size} ${size}`
-            }}
-        />);
-    }
+    const { size } = props;
     return (
         <div>
-            {renderAvatar(props.size)}
+            <img
+                className={classNames(style.avatar)}
+                style={{
+                    width: size,
+                    height: size,
+                    backgroundSize: `${size} ${size}`
+                }}
+            />
         </div>
     );
 }

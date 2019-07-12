@@ -7,7 +7,7 @@
     height: 80px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     left: 0;
@@ -15,12 +15,26 @@
     border-bottom: 1px solid hrColor;
     background-color: myWhite;
     transition: 0.75s height cubic-bezier(0, 0, 0, 1);
-    @media (--media-tablet-s){
-        justify-content: space-between;
+    @media  (--media-tablet-l){ /*от 768 до 1024*/
+        padding: 0 40px 0 40px;
     }
+    @media  (--media-tablet-s){ /*до 768*/
+        padding: 0 15px 0 15px;
+    }
+    @media  (--media-desktop-s){ /*от 1024 до 1360*/
+        padding: 0 90px 0 90px;
+    }
+    @media  (--media-desktop-m){ /*от 1360 до 1600*/
+        padding: 0 220px 0 220px;
+    }
+    @media  (--media-desktop-l){ /*от 1600 до 1716*/
+        padding: 0 375px 0 375px;
+    }
+
+
 }
 
-.headerScrollClass{
+.headerScroll{
     height: 40px;
 }
 
@@ -46,7 +60,8 @@
 }
 
 .search {
-    width: 160px;
+    width: 225px;
+    height: 30px;
     padding: 2px;
     border-radius: 2px;
     border: 1px solid hrColor;
@@ -54,6 +69,9 @@
     font-size: 14px;
     text-align: center;
     background-color: bodyColor;
+    @media (--media-phone) {
+        display:none;
+    }
 }
 
 .search:focus{
@@ -63,13 +81,13 @@
 
 .logInButton, .singUpButton{
     @mixin removeDefaultButton;
-    margin-right: 5px;
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
 }
 
 .logInButton {
+    margin-right: 5px;
     border-radius: 4px;
     background-color: blueButton;
     color: white;

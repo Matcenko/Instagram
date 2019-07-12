@@ -4,7 +4,7 @@ import style from './Header.css';
 
 export default class Header extends Component {
     state = {
-        scrollY: null
+        isScrolled: false
     };
 
     componentDidMount () {
@@ -16,25 +16,21 @@ export default class Header extends Component {
     }
 
     listenScrollEvent = () => {
-        if (window.scrollY) {
+        if (window.scrollY > 100) {
             this.setState({
-                scrollY: window.scrollY
+                isScrolled: true
             });
-            this.isScrolled = window.scrollY;
+        } else if (window.scrollY < 100) {
+            this.setState({
+                isScrolled: false
+            });
         }
     };
 
     render () {
-        let headerScrollClass;
-        let logoScrollClass;
-        if (this.state.scrollY > 100) {
-            headerScrollClass = style.headerScrollClass;
-            logoScrollClass = style.logoScroll;
-        }
-
         return (
-            <nav className={classNames(style.header, headerScrollClass)}>
-                <button className={classNames(style.logo, logoScrollClass)}/>
+            <nav className={classNames(style.header, { [style.headerScroll]: this.state.isScrolled })}>
+                <button className={classNames(style.logo, { [style.logoScroll]: this.state.isScrolled })}/>
                 <input
                     className={style.search}
                     placeholder='Search'
