@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import changePopup from '../../../actions/changePopup';
 import closePopup from '../../../actions/closePopup';
 import changePostInfo from '../../../actions/changePostInfo';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './PopUp.css';
 import Avatar from '../Avatar/Avatar';
@@ -33,12 +33,12 @@ class PopUp extends Component {
         comment: ''
     };
 
-    componentDidMount() {
+    componentDidMount () {
         this.changePopUpByKeyword();
         document.body.style.overflow = 'hidden';
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         document.body.style.overflow = 'auto';
         window.removeEventListener('keydown', this.ecsListener);
         window.removeEventListener('keyup', this.arrowListener);
@@ -69,9 +69,9 @@ class PopUp extends Component {
         }
         const changed = postsOrTagged.map((post, index) => {
             if (index === this.props.popUpIndex) {
-                const {url, likes, comments} = post;
+                const { url, likes, comments } = post;
                 const value = like ? 1 : -1;
-                return {url, likes: likes + value, comments, liked: like};
+                return { url, likes: likes + value, comments, liked: like };
             } else return post;
         });
         this.props.changePostInfo(changed);
@@ -79,20 +79,23 @@ class PopUp extends Component {
     handleAddCommentClick = (postsOrTagged) => {
         const commentaries = postsOrTagged.map((post, index) => {
             if (index === this.props.popUpIndex) {
-                const {comments} = post;
-                comments.push(this.state.comment);
-                return {...post, comments};
+                const { comments } = post;
+                comments.push({
+                    comment: this.state.comment,
+                    date: new Date()
+                });
+                return { ...post, comments };
             } else return post;
         });
         this.props.changePostInfo(commentaries);
-    }
+    };
     handleInputChange = (e) => {
         if (e.target.value.length < 100) {
-            this.setState({comment: e.target.value});
+            this.setState({ comment: e.target.value });
         }
     };
     handleClearInputClick = () => {
-        this.setState({comment: ''});
+        this.setState({ comment: '' });
     };
     handleStopPropagationClick = (e) => {
         e.stopPropagation();
@@ -114,7 +117,41 @@ class PopUp extends Component {
         }
     };
 
-    render() {
+    commentDataHandler = (date) => {
+        const feb = 28;
+        const now = new Date();
+        const monthsLength = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        var day = -1;
+        for (let i = 0; i < date.month; i++) {
+            day += monthsLength[i];
+        }
+        day += date.day;
+        var nowDay = -1;
+        for (let j = 0; j < now.getMonth(); j++) {
+            nowDay += monthsLength[j];
+        }
+        nowDay += date.day;
+
+        const dayDifference = nowDay - day;
+        switch (dayDifference) {
+        case 0:
+            console.log(day, nowDay);
+            return `${date.hours} : ${date.minutes}`;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            return `${dayDifference}d`;
+        default:
+            return `${Math.floor(dayDifference / 7)}w`;
+        }
+    };
+
+    render () {
         const {
             postsShouldRender,
             posts,
@@ -165,7 +202,7 @@ class PopUp extends Component {
                             <hr className={style.grayHr}/>
                             <ul className={style.commentsUl}>
                                 {popUpInfo.comments.map((comment, index) => {
-                                    return (<li key={comment + index}> {comment} </li>);
+                                    return (<li key={comment.comment + index}> {comment.comment + this.commentDataHandler(comment.date)} </li>);
                                 })}
                             </ul>
                             <hr className={style.grayHr}/>
@@ -193,17 +230,16 @@ class PopUp extends Component {
                                 type='text'
                                 placeholder='Add a comment...'/>
                             <button
-                                className={style.post}
+                                className={classNames(style.post, { [style.postIfInputIsEmpty]: !this.state.comment })}
                                 onClick={() => {
                                     this.handleAddCommentClick(postsOrTagged);
                                     this.handleClearInputClick();
+                                    this.props.posts[0].comments[0].date.getMonth();
                                 }}
                             >Post
                             </button>
                         </div>
                     </div>
-
-
                 </div>
                 <button
                     className={rightButtonClass}
@@ -214,7 +250,7 @@ class PopUp extends Component {
     }
 }
 
-const mapStateToProps = ({postsInfo}) => ({
+const mapStateToProps = ({ postsInfo }) => ({
     postsShouldRender: postsInfo.postsShouldRender,
     posts: postsInfo.posts,
     tagged: postsInfo.tagged,

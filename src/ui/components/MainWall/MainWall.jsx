@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import establishPosts from '../../../actions/establishPosts';
 import establishTagged from '../../../actions/establishTagged';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './MainWall.css';
 import User from '../User/User';
@@ -21,13 +21,13 @@ class MainWall extends Component {
 
     state = {
         footerLinksInfo:
-            [{name: 'ABOUT US', link: '#1'}, {name: 'SUPPORT', link: '#2'}, {name: 'PRESS', link: '#3'},
-                {name: 'API', link: '#4'}, {name: 'JOBS', link: '5#'}, {name: 'PRIVACY', link: '#6'},
-                {name: 'TERMS', link: '#7'}, {name: 'DIRECTORY', link: '#8'}, {name: 'PROFILES', link: '#9'},
-                {name: 'HASHTAGS', link: '#10'}, {name: 'LANGUAGE', link: '#11'}]
+            [{ name: 'ABOUT US', link: '#1' }, { name: 'SUPPORT', link: '#2' }, { name: 'PRESS', link: '#3' },
+                { name: 'API', link: '#4' }, { name: 'JOBS', link: '5#' }, { name: 'PRIVACY', link: '#6' },
+                { name: 'TERMS', link: '#7' }, { name: 'DIRECTORY', link: '#8' }, { name: 'PROFILES', link: '#9' },
+                { name: 'HASHTAGS', link: '#10' }, { name: 'LANGUAGE', link: '#11' }]
     };
 
-    render() {
+    render () {
         const {
             postsShouldRender,
             popUpIndex,
@@ -46,12 +46,12 @@ class MainWall extends Component {
                     <hr className={style.hr}/>
                     <div className={style.buttons}>
                         <button
-                            className={classNames(style.postsButton, {[style.buttonClicked]: postsShouldRender})}
+                            className={classNames(style.postsButton, { [style.buttonClicked]: postsShouldRender })}
                             onClick={handleEstablishPostsClick}
                         >Posts
                         </button>
                         <button
-                            className={classNames(style.taggedButton, {[style.buttonClicked]: !postsShouldRender})}
+                            className={classNames(style.taggedButton, { [style.buttonClicked]: !postsShouldRender })}
                             onClick={handleEstablishTaggedClick}
                         >Tagged
                         </button>
@@ -67,7 +67,7 @@ class MainWall extends Component {
     }
 }
 
-const mapStateToProps = ({postsInfo}) => ({
+const mapStateToProps = ({ postsInfo }) => ({
     postsShouldRender: postsInfo.postsShouldRender,
     popUpIndex: postsInfo.popUpIndex
 });

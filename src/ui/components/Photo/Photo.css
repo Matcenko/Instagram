@@ -65,6 +65,6 @@
     background-color: myWhite;
 }
 
-.hoverPhoto:hover{
+.photo:hover .hoverPhoto{
     opacity: 1;
 }

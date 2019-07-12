@@ -53,7 +53,7 @@ class User extends Component {
                     <div className={style.nameAndFollow}>
                         <span className={style.nickName}> {nick}</span>
                         <button
-                            className={classNames(style.followButton, {[style.followingButton]: !follow })}
+                            className={classNames(style.followButton, { [style.followingButton]: !follow })}
                             onClick={this.handleToFollowClick}
                         >{follow ? 'Following' : 'Follow'}
                         </button>
@@ -75,7 +75,7 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = ({ postsInfo }) =>  ({
+const mapStateToProps = ({ postsInfo }) => ({
     nick: postsInfo.userInformation.nick,
     fullName: postsInfo.userInformation.fullName,
     profession: postsInfo.userInformation.profession,

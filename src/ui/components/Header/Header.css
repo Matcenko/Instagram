@@ -8,6 +8,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: nowrap;
     align-items: center;
     position: fixed;
     left: 0;
@@ -72,6 +73,9 @@
     @media (--media-phone) {
         display:none;
     }
+    @media (--media-tablet-s){
+        margin-left: -60px
+    }
 }
 
 .search:focus{
@@ -91,9 +95,6 @@
     border-radius: 4px;
     background-color: blueButton;
     color: white;
-    @media (--media-tablet-s){
-        padding: 3px 6px;
-    }
 }
 
 .singUpButton{

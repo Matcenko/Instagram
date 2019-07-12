@@ -36,7 +36,8 @@ export default class Header extends Component {
                     placeholder='Search'
                 />
                 <div>
-                    <button className={style.logInButton}>Log In</button>
+                    <button
+                        className={style.logInButton}>Log In</button>
                     <button className={style.singUpButton}>Sing Up</button>
                 </div>
             </nav>

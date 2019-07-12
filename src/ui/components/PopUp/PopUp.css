@@ -3,6 +3,7 @@
 @value hrColor from '../../../css/colors.css';
 @value popUpBackground from '../../../css/colors.css';
 @value myWhite from '../../../css/colors.css';
+@value postColor from '../../../css/colors.css';
 
 .popUp{
     width: 100vw;
@@ -62,9 +63,7 @@
 }
 
 .photoInformation {
-    min-width: 300px;
-    max-width: 300px;
-    height: inherit;
+    width: 300px;
     background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }
@@ -113,11 +112,10 @@
 }
 
 .commentsField>.commentsUl{
-    height: calc(100% - 2px);
+    height: calc(100% - 3px);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    overflow: auto
 }
 
 .navigation{
@@ -184,6 +182,9 @@
     color: blueButton;
     background-color: bodyColor;
     cursor: pointer;
+}
+.postIfInputIsEmpty{
+    color: postColor;
 }
 
 .addComment{
