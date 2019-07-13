@@ -206,7 +206,7 @@ class PopUp extends Component {
                     >
                         <header className={style.header}>
                             <div className={style.user}>
-                                <Avatar size="50px"/>
+                                <Avatar avatarIsSmall = {true}/>
                                 <span className={style.name}>{userNick}</span>
                                 <span> &bull;</span>
                                 <button className={style.follow}>Follow</button>

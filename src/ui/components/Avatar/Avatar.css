@@ -1,18 +1,47 @@
 @value myGrey from '../../../css/colors.css';
+@value bodyColor from '../../../css/colors.css';
 
 .avatar{
-    width: 175px;
-    height: 175px;
+    width: 145px;
+    height: 145px;
+    position: relative;
+    top: 5px;
+    left: 5px;
     border-radius: 100%;
+    border: 5px solid bodyColor;
     background-color: myGrey;
     background-image: url(./images/tolkienAvatar.jpg);
-    background-size: 175px 175px;
+    background-size: 145px 145px;
     background-repeat: no-repeat;
+    transform: rotate(310deg);
     @media (--media-tablet-s){
         width: 100px;
         height: 100px;
         background-size: 100px 100px;
     }
 }
-
-
+.avatarIsSmall{
+    width: 45px;
+    height: 45px;
+    position: relative;
+    top: 3px;
+    left: 3px;
+    background-size: 45px 45px;
+    border: 1px solid bodyColor;
+}
+.container {
+    width: 155px;
+    height: 155px;
+    border-radius: 100%;
+    background: linear-gradient(purple, orange);
+    transform: rotate(50deg);
+    cursor: pointer;
+    @media (--media-tablet-s){
+        width: 110px;
+        height: 110px;
+    }
+}
+.avatarIsSmallCont{
+    width: 50px;
+    height: 50px;
+}

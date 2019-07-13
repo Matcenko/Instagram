@@ -4,21 +4,18 @@ import classNames from 'classnames';
 import style from './Avatar.css';
 
 Avatar.propTypes = {
-    size: PropTypes.string
+    avatarIsSmall: PropTypes.string
 };
-
-export default function Avatar (props) {
-    const { size } = props;
+Avatar.defaultProps = {
+    avatarIsSmall: false
+};
+export default function Avatar(props) {
+    const {avatarIsSmall} = props
     return (
         <div>
-            <img
-                className={classNames(style.avatar)}
-                style={{
-                    width: size,
-                    height: size,
-                    backgroundSize: `${size} ${size}`
-                }}
-            />
+            <div className={classNames(style.container, { [style.avatarIsSmallCont]: avatarIsSmall })}>
+                <img className={classNames(style.avatar, { [style.avatarIsSmall]: avatarIsSmall })}/>
+            </div>
         </div>
     );
 }
