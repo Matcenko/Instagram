@@ -80,9 +80,16 @@ class PopUp extends Component {
         const commentaries = postsOrTagged.map((post, index) => {
             if (index === this.props.popUpIndex) {
                 const { comments } = post;
+                const date = new Date();
                 comments.push({
                     comment: this.state.comment,
-                    date: new Date()
+                    date: {
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        day: date.getDate(),
+                        hours: date.getHours(),
+                        minutes: date.getMinutes()
+                    }
                 });
                 return { ...post, comments };
             } else return post;
@@ -117,27 +124,36 @@ class PopUp extends Component {
         }
     };
 
-    commentDataHandler = (date) => {
-        const feb = 28;
+    commentDateHandler = (date) => {
+        function yearIsLeap (year) {
+            return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
+        }
+        function getDays (month, day, feb) {
+            let days = -1;
+            const monthsLength = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            for (let i = 0; i < month; i++) {
+                days += monthsLength[i];
+            }
+            return days + day;
+        }
+
         const now = new Date();
-        const monthsLength = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let feb = yearIsLeap(now.getFullYear()) ? 29 : 28;
+        let nowDay = getDays(now.getMonth(), now.getDate(), feb);
+        feb = yearIsLeap(date.year) ? 29 : 28;
+        let commentDay = getDays(date.month, date.day, feb);
+        let dayDifference = nowDay - commentDay;
 
-        var day = -1;
-        for (let i = 0; i < date.month; i++) {
-            day += monthsLength[i];
+        if (date.year < now.getFullYear()) {
+            for (let i = date.year; i < now.getFullYear(); i++) {
+                commentDay += 355 + yearIsLeap(i);
+            }
+            dayDifference = commentDay - nowDay;
         }
-        day += date.day;
-        var nowDay = -1;
-        for (let j = 0; j < now.getMonth(); j++) {
-            nowDay += monthsLength[j];
-        }
-        nowDay += date.day;
 
-        const dayDifference = nowDay - day;
         switch (dayDifference) {
         case 0:
-            console.log(day, nowDay);
-            return `${date.hours} : ${date.minutes}`;
+            return ` ${date.hours} : ${date.minutes}`;
         case 1:
         case 2:
         case 3:
@@ -145,9 +161,9 @@ class PopUp extends Component {
         case 5:
         case 6:
         case 7:
-            return `${dayDifference}d`;
+            return ` ${dayDifference}d`;
         default:
-            return `${Math.floor(dayDifference / 7)}w`;
+            return ` ${Math.floor(dayDifference / 7)}w`;
         }
     };
 
@@ -202,7 +218,8 @@ class PopUp extends Component {
                             <hr className={style.grayHr}/>
                             <ul className={style.commentsUl}>
                                 {popUpInfo.comments.map((comment, index) => {
-                                    return (<li key={comment.comment + index}> {comment.comment + this.commentDataHandler(comment.date)} </li>);
+                                    return (
+                                        <li key={comment.comment + index}> {comment.comment + this.commentDateHandler(comment.date)} </li>);
                                 })}
                             </ul>
                             <hr className={style.grayHr}/>
@@ -234,7 +251,6 @@ class PopUp extends Component {
                                 onClick={() => {
                                     this.handleAddCommentClick(postsOrTagged);
                                     this.handleClearInputClick();
-                                    this.props.posts[0].comments[0].date.getMonth();
                                 }}
                             >Post
                             </button>
