@@ -4,17 +4,19 @@ import classNames from 'classnames';
 import style from './Avatar.css';
 
 Avatar.propTypes = {
-    avatarIsSmall: PropTypes.string
+    avatarIsSmall: PropTypes.bool,
+    avatarIsMiddle: PropTypes.bool
 };
 Avatar.defaultProps = {
-    avatarIsSmall: false
+    avatarIsSmall: false,
+    avatarIsMiddle: false
 };
-export default function Avatar(props) {
-    const {avatarIsSmall} = props
+export default function Avatar (props) {
+    const { avatarIsSmall, avatarIsMiddle } = props;
     return (
         <div>
-            <div className={classNames(style.container, { [style.avatarIsSmallCont]: avatarIsSmall })}>
-                <img className={classNames(style.avatar, { [style.avatarIsSmall]: avatarIsSmall })}/>
+            <div className={classNames(style.container, { [style.avatarIsSmallCont]: avatarIsSmall, [style.avatarIsMiddleCont]: avatarIsMiddle })}>
+                <img className={classNames(style.avatar, { [style.avatarIsSmall]: avatarIsSmall, [style.avatarIsMiddle]: avatarIsMiddle })}/>
             </div>
         </div>
     );

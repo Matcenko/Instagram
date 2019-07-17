@@ -4,6 +4,7 @@
 
 .main{
     min-height: 100vh;
+    width: 100vw;
     padding: 71px 175px 0 175px;
     display: flex;
     flex-direction: column;
@@ -13,7 +14,7 @@
         padding: 71px 40px 0 40px;
     }
     @media  (--media-tablet-s){ /*до 768*/
-        padding: 71px 15px 0 15px;
+        padding: 71px 0 0 0;
     }
     @media  (--media-desktop-s){ /*от 1024 до 1360*/
         padding: 71px 90px 0 90px;
@@ -28,11 +29,7 @@
 }
 
 .hr{
-    height: 1.25px;
-    margin-top: 20px;
-    border: 0;
-    z-index: 2;
-    background-color: hrColor;
+    @mixin hrStyle;
 }
 
 .buttons{
@@ -45,10 +42,9 @@
     width: 100px;
     margin-top: -9px;
     margin-right: 10px;
+    border-top: 1px solid hrColor;
     font-size: 18px;
     cursor: pointer;
-    border-top: 1px solid hrColor;
-    background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }
 

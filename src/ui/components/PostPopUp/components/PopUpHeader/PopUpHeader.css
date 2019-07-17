@@ -1,0 +1,47 @@
+@value blueButton from '../../../../../css/colors.css';
+
+.header{
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name{
+    font-weight: bold;
+}
+
+.nickNameMargin{
+    margin-left: 10px;
+}
+
+.addIconBefore::after{
+@mixin addIconBefore;
+    background-image: url(../../../User/images/verification.png);
+}
+
+.follow{
+@mixin removeDefaultButton;
+    margin-left: 5px;
+    padding: 0;
+}
+
+.following{
+    color: blueButton;
+}
+
+.points{
+    width: 17.5px;
+    height: 5px;
+    background-image: url(../../images/points.png);
+    background-size: 17.5px 5px;
+    cursor: pointer;
+}
+

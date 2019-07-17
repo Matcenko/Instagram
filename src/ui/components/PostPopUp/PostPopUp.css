@@ -1,0 +1,72 @@
+@value bodyColor from '../../../css/colors.css';
+@value popUpBackground from '../../../css/colors.css';
+
+.popUp{
+    @mixin popUp
+}
+
+.bigPopupField{
+    max-width: 75vw;
+    display: flex;
+    @media  (--media-tablet-s){ /*до 768*/
+        display: none
+    }
+}
+.smallPopupField{
+    display: none;
+    width: 100vw;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    background-color: bodyColor;
+    @media  (--media-tablet-s){ /*до 768*/
+        display: block
+    }
+}
+
+.arrowButton, .closePopup{
+    @mixin removeDefaultButton;
+    display: inline-block;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    @media  (--media-tablet-s){ /*до 768*/
+        display: none
+    }
+}
+
+.arrowButton{
+    width: 25px;
+    height: 25px;
+    background-image: url(./images/arrow.png);
+    background-size: 25px 25px;
+}
+
+.closePopup{
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-image: url(./images/cross.png);
+    background-size: 18px 18px;
+}
+
+.transformArrow{
+    transform: rotate(180deg)
+}
+
+.displayNone{
+    @mixin removeDefaultButton;
+    height: 0;
+    width: 25px;
+    @media  (--media-tablet-s){ /*до 768*/
+        display: none
+    }
+}
+
+
+.photoInformation {
+    width: 300px;
+    max-width: 25vw;
+    background-color: bodyColor;
+    font-family: 'Roboto', sans-serif;
+}

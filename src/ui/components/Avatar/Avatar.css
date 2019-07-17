@@ -1,5 +1,6 @@
 @value myGrey from '../../../css/colors.css';
 @value bodyColor from '../../../css/colors.css';
+@value myWhite from '../../../css/colors.css';
 
 .avatar{
     width: 145px;
@@ -21,12 +22,21 @@
     }
 }
 .avatarIsSmall{
-    width: 45px;
-    height: 45px;
+    width: 30px;
+    height: 30px;
     position: relative;
     top: 3px;
     left: 3px;
-    background-size: 45px 45px;
+    background-size: 30px 30px;
+    border: 1px solid bodyColor;
+}
+
+.avatarIsMiddle{
+    width: 80px;
+    height: 80px;
+    bottom: 15px;
+    position: relative;
+    background-size: 80px 80px;
     border: 1px solid bodyColor;
 }
 .container {
@@ -42,6 +52,11 @@
     }
 }
 .avatarIsSmallCont{
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
+}
+.avatarIsMiddleCont{
+    background: myWhite;
+    width: 80px;
+    height: 80px;
 }

@@ -1,3 +1,6 @@
+@value hrColor from './colors.css';
+@value popUpBackground from './colors.css';
+
 @define-mixin removeDefaultButton {
     border: none;
     outline: none;
@@ -26,4 +29,22 @@
     display: inline-block;
     background-size: 13.5px 13.5px;
     background-repeat: no-repeat;
+}
+@define-mixin hrStyle{
+    height: 1px;
+    margin-top: 20px;
+    border: 0;
+    background-color: hrColor;
+}
+@define-mixin popUp{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: popUpBackground;
+    z-index: 101;
 }

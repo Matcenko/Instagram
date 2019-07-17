@@ -32,8 +32,6 @@
     @media  (--media-desktop-l){ /*от 1600 до 1716*/
         padding: 0 375px 0 375px;
     }
-
-
 }
 
 .headerScroll{
@@ -49,7 +47,6 @@
 .logo{
     height: 78px;
     background-image: url("./images/instagramLogo.png");
-    background-color: myWhite;
     transition:
             0.75s height cubic-bezier(0, 0, 0, 1),
             0.75s background-image -1s cubic-bezier(0, 0, 0, 1);
@@ -84,8 +81,13 @@
     background-color: myWhite;
 }
 
+.buttons{
+    display: flex;
+    flex-wrap: nowrap;
+}
 .logInButton, .singUpButton{
     @mixin removeDefaultButton;
+    max-height: 30px;
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;

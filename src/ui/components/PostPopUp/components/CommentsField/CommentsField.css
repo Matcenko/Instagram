@@ -1,0 +1,48 @@
+@value hrColor from '../../../../../css/colors.css';
+@value myGrey from '../../../../../css/colors.css';
+
+.commentsField{
+    height: calc(100% - 140px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.grayHr{
+    border: 1px solid hrColor;
+    width: 100%;
+}
+
+.commentsUl{
+    height: calc(100% - 3px);
+    padding: 0 5px 0 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.avatarAndComment{
+    display: flex;
+    align-items: center;
+}
+.nickNameMargin{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.name{
+    font-weight: bold;
+}
+
+.commentTimeAndReply{
+    margin: -10px 0 7.5px 45px;
+    font-size: 12px;
+    color: myGrey;
+}
+
+.reply{
+    @mixin removeDefaultButton;
+    margin-left: 5px;
+    cursor: pointer;
+}
+

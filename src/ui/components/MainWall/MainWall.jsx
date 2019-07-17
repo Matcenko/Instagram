@@ -7,16 +7,19 @@ import classNames from 'classnames';
 import style from './MainWall.css';
 import User from '../User/User';
 import Posts from '../Posts/Posts';
-import PopUp from '../PopUp/PopUp';
+import PopUp from '../PostPopUp/PostPopUp';
+import UnFollowPopUp from '../UnFollowPopUp/UnFollowPopUp';
 
 class MainWall extends Component {
     static propTypes = {
         postsShouldRender: PropTypes.bool,
-        popUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]) // потому что null объект
+        postPopUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // потому что null объект
+        isUnFollowPopUp: PropTypes.bool
     };
     static defaultProps = {
         postsShouldRender: true,
-        popUpIndex: null
+        postPopUpIndex: null,
+        isUnFollowPopUp: false
     };
 
     state = {
@@ -30,7 +33,8 @@ class MainWall extends Component {
     render () {
         const {
             postsShouldRender,
-            popUpIndex,
+            postPopUpIndex,
+            isUnFollowPopUp,
             handleEstablishPostsClick,
             handleEstablishTaggedClick
         } = this.props;
@@ -41,7 +45,8 @@ class MainWall extends Component {
         return (
             <main className={style.main}>
                 <div>
-                    {(popUpIndex !== null) && <PopUp/>}
+                    {(postPopUpIndex !== null) && <PopUp/>}
+                    {isUnFollowPopUp && <UnFollowPopUp/>}
                     <User/>
                     <hr className={style.hr}/>
                     <div className={style.buttons}>
@@ -69,7 +74,8 @@ class MainWall extends Component {
 
 const mapStateToProps = ({ postsInfo }) => ({
     postsShouldRender: postsInfo.postsShouldRender,
-    popUpIndex: postsInfo.popUpIndex
+    postPopUpIndex: postsInfo.postPopUpIndex,
+    isUnFollowPopUp: postsInfo.isUnFollowPopUp
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,9 +1,10 @@
-@value bodyColor from '../../../css/colors.css';
-@value blueButton from '../../../css/colors.css';
-@value hrColor from '../../../css/colors.css';
-@value popUpBackground from '../../../css/colors.css';
-@value myWhite from '../../../css/colors.css';
-@value postColor from '../../../css/colors.css';
+@value bodyColor from '../../../../../css/colors.css';
+@value blueButton from '../../../../../css/colors.css';
+@value hrColor from '../../../../../css/colors.css';
+@value popUpBackground from '../../../../../css/colors.css';
+@value myWhite from '../../../../../css/colors.css';
+@value postColor from '../../../../../css/colors.css';
+@value myGrey from '../../../../../css/colors.css';
 
 .popUp{
     width: 100vw;
@@ -18,10 +19,11 @@
     z-index: 1;
 }
 .popupField{
+    max-width: 75vw;
     display: flex;
 }
 .arrowButton, .closePopup{
-    @mixin removeDefaultButton;
+@mixin removeDefaultButton;
     display: inline-block;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -29,7 +31,7 @@
 .arrowButton{
     width: 25px;
     height: 25px;
-    background-image: url(./images/arrow.png);
+    background-image: url(../../images/arrow.png);
     background-size: 25px 25px;
 }
 .closePopup{
@@ -38,7 +40,7 @@
     position: absolute;
     top: 14px;
     right: 14px;
-    background-image: url(./images/cross.png);
+    background-image: url(../../images/cross.png);
     background-size: 18px 18px;
 
 }
@@ -46,7 +48,7 @@
     transform: rotate(180deg)
 }
 .displayNone{
-    @mixin removeDefaultButton;
+@mixin removeDefaultButton;
     height: 0;
     width: 25px;
 }
@@ -64,62 +66,18 @@
 
 .photoInformation {
     width: 300px;
+    max-width: 25vw;
     background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }
 
-.header{
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.user{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.name{
+.nickNameMargin{
     margin-left: 10px;
-}
-
-.name::after{
-    @mixin addIconBefore;
-    background-image: url(../User/images/verification.png);
-}
-
-.follow{
-    @mixin removeDefaultButton;
-    margin-left: 5px;
-    padding: 0;
-    background-color: bodyColor;
-}
-
-.points{
-    background-image: url(./images/points.png);
-    background-size: 17.5px 5px;
-    width: 17.5px;
-    height: 5px;
-}
-
-.commentsField{
-    height: calc(100% - 140px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.commentsField>.commentsUl{
-    height: calc(100% - 3px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
 }
 
 .navigation{
     height: 50px;
+    margin-left: 7.5px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -145,26 +103,26 @@
 }
 
 .heartButton{
-    background-image: url(./images/heartBlack.png);
+    background-image: url(../../images/heartBlack.png);
 }
 
 .heartButtonRed{
-    background-image:url(./images/heartRed.jpg);
+    background-image:url(../../images/heartRed.jpg);
     background-size: 15px 15px;
     margin-left: 2px;
 }
 
 .commentButton{
-    background-image: url(./images/comment.png);
+    background-image: url(../../images/comment.png);
 }
 
 .upLoadButton{
-    background-image: url(./images/upLoad.png);
+    background-image: url(../../images/upLoad.png);
     background-size: 15px 15px;
 }
 
 .saveButton{
-    background-image: url(./images/save.png);
+    background-image: url(../../images/save.png);
 }
 
 .comment{
@@ -175,7 +133,7 @@
 }
 
 .post{
-    @mixin removeDefaultButton;
+@mixin removeDefaultButton;
     width: 10%;
     margin-right: 5px;
     font-size: 11.5px;

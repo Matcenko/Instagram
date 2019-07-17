@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './Header.css';
 
+const HEADER_SCROLL = 100;
+
 export default class Header extends Component {
     state = {
         isScrolled: false
@@ -16,15 +18,9 @@ export default class Header extends Component {
     }
 
     listenScrollEvent = () => {
-        if (window.scrollY > 100) {
-            this.setState({
-                isScrolled: true
-            });
-        } else if (window.scrollY < 100) {
-            this.setState({
-                isScrolled: false
-            });
-        }
+        this.setState({
+            isScrolled: window.scrollY > HEADER_SCROLL
+        });
     };
 
     render () {
@@ -35,10 +31,9 @@ export default class Header extends Component {
                     className={style.search}
                     placeholder='Search'
                 />
-                <div>
-                    <button
-                        className={style.logInButton}>Log In</button>
-                    <button className={style.singUpButton}>Sing Up</button>
+                <div className={style.buttons}>
+                    <button className={style.logInButton}>Log&nbsp;In</button>
+                    <button className={style.singUpButton}>Sing&nbsp;Up</button>
                 </div>
             </nav>
         );

@@ -1,0 +1,51 @@
+@value myWhite from '../../../css/colors.css';
+@value popUpBackground from '../../../css/colors.css';
+@value hrColor from '../../../css/colors.css';
+@value unFollow from '../../../css/colors.css';
+
+.popUp{
+    @mixin popUp
+}
+
+.unFollow, .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.unFollow {
+    width: 400px;
+    height: 300px;
+    padding-top: 35px;
+    background-color: myWhite;
+    border-radius: 10px;
+}
+
+.UnfollowUserText{
+    margin-top: 25px;
+}
+
+.container{
+    width: 100%;
+}
+
+.hrStyle{
+    @mixin hrStyle;
+    width: 100%;
+}
+
+.UnfollowButton, .cancelButton{
+    @mixin removeDefaultButton;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.UnfollowButton{
+    color: unFollow;
+}
+.cancelButton{
+    margin-bottom: 20px;
+}

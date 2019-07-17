@@ -2,11 +2,19 @@
 @value linkColor from '../../../css/colors.css';
 @value myWhite from '../../../css/colors.css';
 @value myBlack from '../../../css/colors.css';
+@value myGrey from '../../../css/colors.css';
 @value hrColor from '../../../css/colors.css';
 
+.container{
+    overflow: hidden;
+}
 .user{
     margin: 65px 70px 55px 70px;
     display: flex;
+
+    @media (--media-tablet-s){
+        margin-left: 5px;
+    }
 }
 
 .userInformation{
@@ -14,15 +22,23 @@
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
+    @media (--media-tablet-s){
+        margin-left: 25px;
+    }
 }
 
 .nameAndFollow{
     margin-bottom: 25px;
+    @media (--media-tablet-s){
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+    }
 }
 
 .nickName{
     font-size: 20px;
-    font-weight: bold;
 }
 
 .nickName:after {
@@ -31,14 +47,18 @@
 }
 
 .followButton{
+    width: 100px;
     margin-left: 11px;
-    padding: 6px 16px;
+    padding: 6px 5px;
     font-size: 14px;
-    cursor: pointer;
+    border: 1px solid hrColor;
     border-radius: 4px;
     background-color: myWhite;
     color: myBlack ;
-    border: 1px solid hrColor;
+    cursor: pointer;
+    @media (--media-tablet-s){
+        margin: 5px 0;
+    }
 }
 
 .followingButton{
@@ -53,6 +73,9 @@
 
 .followersInfo{
     margin: 0 30px 25px 0;
+    @media (--media-tablet-s){
+        display: none
+    }
 }
 
 .bold{
@@ -63,9 +86,31 @@
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+    @media (--media-tablet-s){
+        margin: 30px -130px;
+    }
 }
 
 .nameWorkWeb>.bold{
     text-decoration: none;
     color: linkColor;
+}
+.hr{
+    @mixin hrStyle;
+}
+.followersInfoMobile{
+    display: none;
+
+    @media (--media-tablet-s){
+        width: 100%;
+        display: block
+    }
+}
+.followersInfoMobileText{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+.greyText{
+    color: myGrey;
 }

@@ -1,65 +1,68 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import followUser from '../../../actions/followUser';
+import changeUnFollowPopUp from '../../../actions/changeUnFollowPopUp';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import style from './User.css';
 import Avatar from '../Avatar/Avatar.jsx';
 
-class User extends Component {
-    static defaultProps = {
-        nick: '',
-        fullName: '',
-        profession: '',
-        site: ''
-    };
+User.defaultProps = {
+    nick: '',
+    fullName: '',
+    profession: '',
+    site: '',
+    follow: false,
+    followers: 0,
+    following: 0
+};
 
-    static propTypes = {
-        nick: PropTypes.string,
-        fullName: PropTypes.string,
-        profession: PropTypes.string,
-        site: PropTypes.string
-    };
+User.propTypes = {
+    nick: PropTypes.string,
+    fullName: PropTypes.string,
+    profession: PropTypes.string,
+    site: PropTypes.string,
+    follow: PropTypes.bool,
+    followers: PropTypes.number,
+    following: PropTypes.number
+};
 
-    state = {
-        follow: false,
-        followers: 9,
-        following: 10
-    };
+function User (props) {
+    const {
+        nick,
+        fullName,
+        profession,
+        site,
+        posts,
+        follow,
+        followers,
+        following,
+        handleFollowUserClick,
+        handleChangeUnFollowPopUp
+    } = props;
 
-    handleToFollowClick = () => {
-        this.setState({
-            followers: this.state.follow ? this.state.followers - 1 : this.state.followers + 1,
-            follow: !this.state.follow
-        });
-    };
-
-    render () {
-        const {
-            nick,
-            fullName,
-            profession,
-            site,
-            posts
-        } = this.props;
-        const {
-            follow,
-            followers,
-            following
-        } = this.state;
-        return (
+    return (
+        <div className={style.container}>
             <header className={style.user}>
                 <Avatar/>
                 <div className={style.userInformation}>
                     <div className={style.nameAndFollow}>
-                        <span className={style.nickName}> {nick}</span>
+                        <span className={classNames(style.nickName, style.bold)}> {nick}</span>
                         <button
                             className={classNames(style.followButton, { [style.followingButton]: !follow })}
-                            onClick={this.handleToFollowClick}
+                            onClick={() => {
+                                if (follow) {
+                                    handleChangeUnFollowPopUp();
+                                } else {
+                                    handleFollowUserClick();
+                                }
+                            }}
                         >{follow ? 'Following' : 'Follow'}
                         </button>
                     </div>
                     <div className={style.followers}>
-                        <span className={style.followersInfo}><span className={style.bold}>{posts}</span> posts </span>
+                        <span className={style.followersInfo}><span
+                            className={style.bold}>{posts}</span> posts </span>
                         <span className={style.followersInfo}><span className={style.bold}>{followers}</span> followers </span>
                         <span className={style.followersInfo}><span className={style.bold}>{following}</span> following </span>
                     </div>
@@ -71,8 +74,28 @@ class User extends Component {
                     </div>
                 </div>
             </header>
-        );
-    }
+            <div className={style.followersInfoMobile}>
+                <hr className={style.hr}/>
+                <div className={style.followersInfoMobileText}>
+                    <p>
+                        <span className={style.bold}>{posts}</span>
+                        <br/>
+                        <span className={style.greyText}>posts</span>
+                    </p>
+                    <p>
+                        <span className={style.bold}>{followers}</span>
+                        <br/>
+                        <span className={style.greyText}>followers</span>
+                    </p>
+                    <p>
+                        <span className={style.bold}>{following}</span>
+                        <br/>
+                        <span className={style.greyText}>following</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 const mapStateToProps = ({ postsInfo }) => ({
@@ -80,7 +103,14 @@ const mapStateToProps = ({ postsInfo }) => ({
     fullName: postsInfo.userInformation.fullName,
     profession: postsInfo.userInformation.profession,
     site: postsInfo.userInformation.site,
-    posts: postsInfo.posts.length
+    posts: postsInfo.posts.length,
+    follow: postsInfo.userInformation.follow,
+    followers: postsInfo.userInformation.followers,
+    following: postsInfo.userInformation.following
 });
 
-export default connect(mapStateToProps)(User);
+const mapDispatchToProps = dispatch => ({
+    handleFollowUserClick: () => dispatch(followUser()),
+    handleChangeUnFollowPopUp: () => dispatch(changeUnFollowPopUp())
+});
+export default connect(mapStateToProps, mapDispatchToProps)(User);
