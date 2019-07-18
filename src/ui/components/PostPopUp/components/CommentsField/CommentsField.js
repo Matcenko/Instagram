@@ -60,11 +60,11 @@ function CommentsField (props) {
             return ` ${Math.floor(dayDifference / 7)}w`;
         }
     }
-    function fixComment(comment) {
+    function fixComment (comment) {
         let buf = comment.split('');
         let firstLine = 30 - props.userNick.length + 1;
         buf.splice(firstLine, 0, '\n');
-        for ( let i = firstLine; i < buf.length; i++) {
+        for (let i = firstLine; i < buf.length; i++) {
             if (i % 30 - firstLine === 0) {
                 buf.splice(i, 0, '\n');
             }

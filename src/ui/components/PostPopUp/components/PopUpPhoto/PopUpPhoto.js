@@ -11,7 +11,7 @@ PopUpPhoto.defaultProps = {
     postsOrTagged: []
 };
 
-function PopUpPhoto(props) {
+function PopUpPhoto (props) {
     const {
         popUpInfoUrl,
         handleChangeLikeClick,
