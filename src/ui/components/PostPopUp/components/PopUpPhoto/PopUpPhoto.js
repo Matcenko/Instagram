@@ -11,7 +11,7 @@ PopUpPhoto.defaultProps = {
     postsOrTagged: []
 };
 
-function PopUpPhoto (props) {
+function PopUpPhoto(props) {
     const {
         popUpInfoUrl,
         handleChangeLikeClick,
@@ -19,12 +19,14 @@ function PopUpPhoto (props) {
         handleStopPropagationClick
     } = props;
     return (
-        <img
-            className={style.photo}
-            src={popUpInfoUrl}
-            onDoubleClick={() => handleChangeLikeClick(postsOrTagged, true)}
-            onClick={handleStopPropagationClick}
-        />);
+        <div className={style.container}>
+            <img
+                className={style.photo}
+                src={popUpInfoUrl}
+                onDoubleClick={() => handleChangeLikeClick(postsOrTagged, true)}
+                onClick={handleStopPropagationClick}
+            />
+        </div>);
 }
 
 export default PopUpPhoto;

@@ -1,9 +1,16 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
 .photo{
     min-width: 20vw;
     min-height: 40vh;
     max-width: 40vw;
     max-height: 75vh;
     @media  (--media-tablet-s){ /*до 768*/
+        min-width: 80vw
+    }
+@media  (--media-phones){ /*до 768*/
         min-width: 100vw
     }
 }

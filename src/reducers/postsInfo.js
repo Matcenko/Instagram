@@ -97,9 +97,9 @@ const initialState = {
         fullName: 'John Ronald Reuel Tolkien',
         profession: 'Writer, poet, philologist, and academic',
         site: 'tolkien.co.uk',
-        follow: false,
-        followers: 9,
-        following: 10
+        follow: true,
+        followers: 956,
+        following: 23
     },
 
     postPopUpIndex: null,

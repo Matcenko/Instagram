@@ -15,8 +15,7 @@
 .smallPopupField{
     display: none;
     width: 100vw;
-    height: calc(100vh - 80px);
-    margin-top: 80px;
+    height: 100vh;
     background-color: bodyColor;
     @media  (--media-tablet-s){ /*до 768*/
         display: block
@@ -63,10 +62,8 @@
     }
 }
 
-
 .photoInformation {
     width: 300px;
-    max-width: 25vw;
     background-color: bodyColor;
     font-family: 'Roboto', sans-serif;
 }

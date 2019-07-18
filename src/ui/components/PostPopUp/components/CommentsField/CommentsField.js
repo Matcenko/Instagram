@@ -60,7 +60,17 @@ function CommentsField (props) {
             return ` ${Math.floor(dayDifference / 7)}w`;
         }
     }
-
+    function fixComment(comment) {
+        let buf = comment.split('');
+        let firstLine = 30 - props.userNick.length + 1;
+        buf.splice(firstLine, 0, '\n');
+        for ( let i = firstLine; i < buf.length; i++) {
+            if (i % 30 - firstLine === 0) {
+                buf.splice(i, 0, '\n');
+            }
+        }
+        return buf.join('');
+    }
     const {
         userNick,
         popUpInfo
@@ -77,7 +87,7 @@ function CommentsField (props) {
                                 <Avatar avatarIsSmall/>
                                 <li className={style.nickNameMargin}>
                                     <span className={style.name}>{userNick}&nbsp;</span>
-                                    <span>{comment.comment}</span>
+                                    <span>{fixComment(comment.comment)}</span>
                                 </li>
                             </div>
                             <div className={style.commentTimeAndReply}>

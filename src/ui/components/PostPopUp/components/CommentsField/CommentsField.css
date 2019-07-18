@@ -23,7 +23,7 @@
 
 .avatarAndComment{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 .nickNameMargin{
     margin-left: 10px;
