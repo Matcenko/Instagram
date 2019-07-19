@@ -9,7 +9,9 @@ import Avatar from '../../../Avatar/Avatar';
 
 PopUpHeader.propTypes = {
     userNick: PropTypes.string,
-    follow: PropTypes.bool
+    follow: PropTypes.bool,
+    handleFollowUserClick: PropTypes.func,
+    handleChangeUnFollowPopUp: PropTypes.func
 };
 PopUpHeader.defaultProps = {
     userNick: '',

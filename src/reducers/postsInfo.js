@@ -16,8 +16,8 @@ const initialState = {
             likes: 14,
             comments: [{
                 comment: 'nice photo!',
-                date: { year: 2019, month: 6, day: 16, hours: 14, minutes: 25, seconds: 14 }
-            }, { comment: 'cool', date: { year: 2019, month: 6, day: 13, hours: 2, minutes: 22, seconds: 14 } }],
+                date: { year: 2019, month: 6, day: 19, hours: 0, minutes: 0, seconds: 0 }
+            }, { comment: 'cool', date: { year: 2019, month: 6, day: 18, hours: 22, minutes: 22, seconds: 14 } }],
             liked: false
         },
         {

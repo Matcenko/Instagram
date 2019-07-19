@@ -7,7 +7,9 @@ import style from './UnFollowPopUp.css';
 import Avatar from '../Avatar/Avatar';
 
 UnFollowPopUp.propTypes = {
-    nick: PropTypes.string
+    nick: PropTypes.string,
+    handleChangeUnFollowPopUp: PropTypes.func,
+    handleFollowUserClick: PropTypes.func
 };
 UnFollowPopUp.defaultProps = {
     nick: ''

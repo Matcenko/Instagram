@@ -3,15 +3,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 PopUpPhoto.propTypes = {
-    popUpInfo: PropTypes.object,
-    postsOrTagged: PropTypes.array
+    popUpInfoUrl: PropTypes.string,
+    postsOrTagged: PropTypes.array,
+    handleChangeLikeClick: PropTypes.func,
+    handleStopPropagationClick: PropTypes.func
 };
 PopUpPhoto.defaultProps = {
     popUpInfo: {},
     postsOrTagged: []
 };
 
-function PopUpPhoto (props) {
+export default function PopUpPhoto (props) {
     const {
         popUpInfoUrl,
         handleChangeLikeClick,
@@ -28,5 +30,3 @@ function PopUpPhoto (props) {
             />
         </div>);
 }
-
-export default PopUpPhoto;

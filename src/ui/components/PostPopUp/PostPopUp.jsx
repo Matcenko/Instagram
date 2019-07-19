@@ -28,7 +28,10 @@ class PostPopUp extends Component {
         postsShouldRender: PropTypes.bool,
         posts: PropTypes.array,
         tagged: PropTypes.array,
-        postPopUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]) // потому что null объект
+        postPopUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // потому что null объект
+        handleClosePopUpClick: PropTypes.func,
+        handleChangePopupClick: PropTypes.func,
+        changePostInfo: PropTypes.func
     };
 
     state = {
@@ -120,6 +123,13 @@ class PostPopUp extends Component {
             postPopUpIndex,
             handleClosePopUpClick
         } = this.props;
+        const {
+            handleLeftArrowClick,
+            handleStopPropagationClick,
+            renderNavigation,
+            renderPopUpPhoto,
+            handleRightArrowClick
+        } = this;
 
         const postsOrTagged = postsShouldRender ? posts : tagged;
         const popUpInfo = postsOrTagged[postPopUpIndex];
@@ -134,28 +144,28 @@ class PostPopUp extends Component {
                 <button className={style.closePopup}/>
                 <button
                     className={classNames(leftButtonClass, style.transformArrow)}
-                    onClick={this.handleLeftArrowClick}
+                    onClick={handleLeftArrowClick}
                 />
                 <div className={style.bigPopupField}>
                     {this.renderPopUpPhoto(postsOrTagged, popUpInfo)}
                     <div
                         className={style.photoInformation}
-                        onClick={this.handleStopPropagationClick}
+                        onClick={handleStopPropagationClick}
                     >
                         <PopUpHeader/>
                         <CommentsField popUpInfo={popUpInfo}/>
-                        {this.renderNavigation(postsOrTagged, popUpInfo)}
+                        {renderNavigation(postsOrTagged, popUpInfo)}
                         <AddComment postsOrTagged={postsOrTagged}/>
                     </div>
                 </div>
                 <div className={style.smallPopupField}>
                     <PopUpHeader/>
-                    {this.renderPopUpPhoto(postsOrTagged, popUpInfo)}
-                    {this.renderNavigation(postsOrTagged, popUpInfo)}
+                    {renderPopUpPhoto(postsOrTagged, popUpInfo)}
+                    {renderNavigation(postsOrTagged, popUpInfo)}
                 </div>
                 <button
                     className={rightButtonClass}
-                    onClick={this.handleRightArrowClick(postsOrTagged)}
+                    onClick={handleRightArrowClick(postsOrTagged)}
                 />
             </div>
         );

@@ -18,6 +18,7 @@ function CommentsField (props) {
         function yearIsLeap (year) {
             return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
         }
+
         function getDays (month, day, feb) {
             let days = -1;
             const monthsLength = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -26,6 +27,7 @@ function CommentsField (props) {
             }
             return days + day;
         }
+
         const now = new Date();
         let feb = yearIsLeap(now.getFullYear()) ? 29 : 28;
         let nowDay = getDays(now.getMonth(), now.getDate(), feb);
@@ -42,7 +44,7 @@ function CommentsField (props) {
         const nowSeconds = (dayDifference * 24 + now.getHours()) * 3600 + now.getMinutes() * 60 + now.getSeconds();
         const dateSeconds = date.hours * 3600 + date.minutes * 60 + date.seconds;
         const secondsDifference = nowSeconds - dateSeconds;
-        if (dayDifference <= 1) { // 1, если комментарий был написал вчерашней датой, но 24 часа не прошло
+        if (secondsDifference < 86400) {
             switch (true) {
             case secondsDifference === 0:
                 return 'Now';
@@ -54,23 +56,25 @@ function CommentsField (props) {
                 return `${Math.floor(secondsDifference / 3600)}h`;
             }
         }
-        if (((dayDifference > 1) && (dayDifference < 7)) || ((dayDifference === 1) && (secondsDifference >= 86400))) { // включаем 1, если прошло 24 часа
+        if ((dayDifference < 7) && (secondsDifference >= 86400)) {
             return ` ${dayDifference}d`;
         } else if (dayDifference >= 7) {
             return ` ${Math.floor(dayDifference / 7)}w`;
         }
     }
+
     function fixComment (comment) {
         let buf = comment.split('');
-        let firstLine = 30 - props.userNick.length + 1;
+        let firstLine = 21 - props.userNick.length + 1;
         buf.splice(firstLine, 0, '\n');
         for (let i = firstLine; i < buf.length; i++) {
-            if (i % 30 - firstLine === 0) {
+            if (i % 21 - firstLine === 0) {
                 buf.splice(i, 0, '\n');
             }
         }
         return buf.join('');
     }
+
     const {
         userNick,
         popUpInfo

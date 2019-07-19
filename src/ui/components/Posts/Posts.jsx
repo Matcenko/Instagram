@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import changePopup from '../../../actions/changePopup';
 import { connect } from 'react-redux';
 import style from './Posts.css';
 import Photo from '../Photo/Photo';
@@ -14,7 +15,8 @@ class Posts extends Component {
     static propTypes = {
         postsShouldRender: PropTypes.bool,
         posts: PropTypes.array,
-        tagged: PropTypes.array
+        tagged: PropTypes.array,
+        handleChangePopupClick: PropTypes.func
     };
 
     render () {
@@ -54,6 +56,6 @@ const mapStateToProps = ({ postsInfo }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleChangePopupClick: (index) => dispatch({ type: 'CHANGE_POPUP', payload: index })
+    handleChangePopupClick: (index) => dispatch(changePopup(index))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

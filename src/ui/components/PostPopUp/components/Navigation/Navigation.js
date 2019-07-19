@@ -5,7 +5,8 @@ import style from './Navigation.css';
 
 Navigation.propTypes = {
     postsOrTagged: PropTypes.array,
-    popUpInfo: PropTypes.object
+    popUpInfo: PropTypes.object,
+    handleChangeLikeClick: PropTypes.func
 };
 Navigation.defaultProps = {
     popUpInfo: {},
@@ -13,7 +14,7 @@ Navigation.defaultProps = {
 
 };
 
-function Navigation (props) {
+export default function Navigation (props) {
     const {
         handleChangeLikeClick,
         postsOrTagged,
@@ -43,5 +44,3 @@ function Navigation (props) {
         </div>
     );
 }
-
-export default Navigation;

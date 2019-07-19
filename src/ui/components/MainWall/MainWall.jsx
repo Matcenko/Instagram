@@ -14,7 +14,9 @@ class MainWall extends Component {
     static propTypes = {
         postsShouldRender: PropTypes.bool,
         postPopUpIndex: PropTypes.oneOfType([PropTypes.object, PropTypes.number]), // потому что null объект
-        isUnFollowPopUp: PropTypes.bool
+        isUnFollowPopUp: PropTypes.bool,
+        handleEstablishPostsClick: PropTypes.func,
+        handleEstablishTaggedClick: PropTypes.func
     };
     static defaultProps = {
         postsShouldRender: true,

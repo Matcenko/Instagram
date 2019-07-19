@@ -17,7 +17,7 @@ Photo.defaultProps = {
     isMiddle: true
 };
 
-function Photo (props) {
+export default function Photo (props) {
     const {
         url,
         likes,
@@ -47,4 +47,4 @@ function Photo (props) {
     );
 }
 
-export default Photo;
+;

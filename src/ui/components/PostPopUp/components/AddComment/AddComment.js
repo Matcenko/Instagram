@@ -19,7 +19,7 @@ class AddComment extends Component {
     };
 
     state = {
-        comment: ``
+        comment: ''
     };
     handleAddCommentClick = (postsOrTagged) => {
         if (this.state.comment) {
@@ -50,23 +50,32 @@ class AddComment extends Component {
         }
     };
     handleClearInputClick = () => {
-        this.setState({ comment: `` });
+        this.setState({ comment: '' });
     };
 
     render () {
+        const {
+            state,
+            handleInputChange,
+            handleAddCommentClick,
+            handleClearInputClick
+        } = this;
+        const {
+            postsOrTagged
+        } = this.props;
         return (
             <div className={style.comment}>
                 <input
                     className={style.addComment}
-                    value={this.state.comment}
-                    onChange={this.handleInputChange}
+                    value={state.comment}
+                    onChange={handleInputChange}
                     type='text'
                     placeholder='Add a comment...'/>
                 <button
-                    className={classNames(style.post, { [style.postIfInputIsEmpty]: !this.state.comment })}
+                    className={classNames(style.post, { [style.postIfInputIsEmpty]: !state.comment })}
                     onClick={() => {
-                        this.handleAddCommentClick(this.props.postsOrTagged);
-                        this.handleClearInputClick();
+                        handleAddCommentClick(postsOrTagged);
+                        handleClearInputClick();
                     }}
                 >Post
                 </button>

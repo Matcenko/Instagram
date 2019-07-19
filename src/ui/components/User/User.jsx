@@ -22,9 +22,12 @@ User.propTypes = {
     fullName: PropTypes.string,
     profession: PropTypes.string,
     site: PropTypes.string,
+    posts: PropTypes.number,
     follow: PropTypes.bool,
     followers: PropTypes.number,
-    following: PropTypes.number
+    following: PropTypes.number,
+    handleFollowUserClick: PropTypes.func,
+    handleChangeUnFollowPopUp: PropTypes.func
 };
 
 function User (props) {
